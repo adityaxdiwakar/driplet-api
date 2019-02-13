@@ -1,0 +1,68 @@
+#general requirements
+import time, json, os, random
+
+#API dependencies
+from flask import Flask
+from flask_restful import Api, Resource, reqparse
+
+#helper functions
+def get_user_id():
+    while True:
+        r = random.randint(1000000000,9999999999)
+        if r not in os.listdir('bin'):
+            return 'u' + str(r)
+
+def get_users():
+    users = []
+    for user in os.listdir('bin'):
+        data = json.load(open(f"bin/{user}/account.json", "r"))
+        users.append(data)
+    return users
+
+def get_user(id):
+    users = os.listdir('bin')
+    if str(id) not in users:
+        return None
+    else:
+        return json.load(open(f"bin/{id}/account.json", "r"))
+
+def push_user(user):
+    os.mkdir(f"bin/{user['id']}")
+    json.dump(
+        user,
+        open(f"bin/{user['id']}/account.json", "w"),
+        indent = 4
+    )
+    json.dump(
+        [],
+        open(f"bin/{user['id']}/services.json", "w"),
+        indent = 4
+    )
+
+class registration(Resource):
+    def post(self): 
+        parser = reqparse.RequestParser()
+        parser.add_argument("first_name")
+        parser.add_argument("last_name")
+        parser.add_argument("username")
+        parser.add_argument("email")
+        parser.add_argument("password")
+        args = parser.parse_args()
+
+        users = get_users()
+        for user in users:
+            if user['email'] == args['email']:
+                return "A user with that email already exists", 400
+        
+        user = {
+            "first_name":args['first_name'],
+            "last_name":args['last_name'],
+            "username":args['username'],
+            "email":args['email'],
+            "password":args['password'],
+            "id":get_user_id()
+        }
+
+        users.append(user)
+        push_user(user)
+        return user, 201
