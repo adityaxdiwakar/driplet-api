@@ -1,5 +1,5 @@
 #general requirements
-import time, json, os, random
+import time, json, os, random, shutil
 
 #API dependencies
 from flask import Flask
@@ -74,3 +74,36 @@ class acmang(Resource):
             return {"message": "User could not be found", "code": 404}, 404
         else:
             return user
+
+    def delete(self, client_id):
+        users = get_users()
+        for user in users:
+            if user['id'] == client_id:
+                shutil.rmtree(f"bin/{client_id}")
+                return "", 204
+        return {"message": "User could not be found", "code": 404}, 404
+
+    def patch(self, client_id):
+        parser = reqparse.RequestParser()
+        parser.add_argument("first_name")
+        parser.add_argument("last_name")
+        parser.add_argument("username")
+        parser.add_argument("email")
+        parser.add_argument("password")
+        args = parser.parse_args()
+        updates = {}
+        for key in args:
+            if args[key] != None:
+                updates.update({key:args[key]})
+                
+        users = get_users()
+        for user in users:
+            if user['id'] == client_id:
+                user.update(updates)
+                json.dump(
+                    user,
+                    open(f"bin/{client_id}/account.json", "w"),
+                    indent = 4
+                )
+                return user, 200
+        return {"message": "User could not be found", "code": 404}, 404
