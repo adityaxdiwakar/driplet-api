@@ -2,3 +2,4 @@ bin/
 .env
 *.txt
 *.pyc
+global_bin/
