@@ -66,3 +66,11 @@ class registration(Resource):
         users.append(user)
         push_user(user)
         return user, 201
+
+class acmang(Resource):
+    def get(self, client_id):
+        user = get_user(client_id)
+        if user == None:
+            return {"message": "User could not be found", "code": 404}, 404
+        else:
+            return user

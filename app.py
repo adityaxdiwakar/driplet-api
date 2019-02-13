@@ -13,6 +13,7 @@ api.add_resource(services.manager_indv, "/endpoints/<string:client_id>/services/
 
 #writing account endpoints
 api.add_resource(accounts.registration, "/endpoints/register")
+api.add_resource(accounts.acmang, "/endpoints/accounts/<string:client_id>")
 
 #running and setting host port (local for nginx reverse proxy)
 app.run(host='127.0.0.1', port=3141, debug=True)
