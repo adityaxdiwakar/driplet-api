@@ -1,5 +1,5 @@
 #general requirements
-import time, json, os, random, systemctl
+import time, json, os, random, systemctl, threading
 
 #API dependencies
 from flask import Flask
@@ -36,7 +36,7 @@ def allocate_new_port():
             used_ports.append(r)
             json.dump(
                 used_ports,
-                open("global_bin/used_ports.json", "w")
+                open("global_bin/used_ports.json", "w"),
                 indent = 4
             )
             return r
@@ -69,11 +69,23 @@ class manager(Resource):
         push_services(user_services, client_id)
         return service, 201
 
+websockets = {}
+
 class manager_indv(Resource):
     def get(self, client_id, service_id):
         services = get_services(client_id)
         for service in services:
             if service['id'] == service_id:
+                websockets.update({
+                    client_id: {
+                        service_id: threading.Thread(
+                            name=str(f"{client_id}:{service_id}"), 
+                            target=systemctl.listen,
+                            args=[service]
+                        )
+                    }
+                })
+                websockets[client_id][service_id].start()
                 return service
     def delete(self, client_id, service_id):
         services = get_services(client_id)

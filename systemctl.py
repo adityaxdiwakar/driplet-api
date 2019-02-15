@@ -1,7 +1,17 @@
-import subprocess
+import subprocess, zmq, time, sys
 
-def listen(service_name):
-  command = f"journalctl -u {service_name} -f"
+def listen(service):
+  print("opening socket")
+  context = zmq.Context()
+  socket = context.socket(zmq.PUB)
+  socket.bind('tcp://0.0.0.0:3142')
+  command = service['log_command']
   p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
+  print(p.stdout.readline())
+  time.sleep(5)
+  socket.send(p.stdout.readline())
+  prev_sd = -1
   while True:
-    print(p.stdout.readline())
+    if p.stdout.readline() != prev_sd:
+      prev_sd = p.stdout.readline()
+      socket.send(p.stdout.readline())
