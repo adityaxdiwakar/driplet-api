@@ -4,7 +4,7 @@ def listen(service):
   print("opening socket")
   context = zmq.Context()
   socket = context.socket(zmq.PUB)
-  socket.bind('tcp://0.0.0.0:3142')
+  socket.bind(f"tcp://0.0.0.0:{service['port']}")
   command = service['log_command']
   p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
   print(p.stdout.readline())
