@@ -1,5 +1,5 @@
-bin/
+backend/bin/
 .env
 *.txt
 *.pyc
-global_bin/
+backend/global_bin/

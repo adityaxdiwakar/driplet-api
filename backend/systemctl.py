@@ -1,13 +1,11 @@
 import subprocess, zmq, time, sys
 
 def listen(service):
-  print("opening socket")
   context = zmq.Context()
   socket = context.socket(zmq.PUB)
   socket.bind(f"tcp://0.0.0.0:{service['port']}")
   command = service['log_command']
   p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
-  print(p.stdout.readline())
   time.sleep(5)
   socket.send(p.stdout.readline())
   prev_sd = -1
