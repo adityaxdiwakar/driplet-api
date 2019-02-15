@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <title>Driplet - Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Driplet</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Home</a>
+                </li>
+            </ul>
+            <a href="login.html">
+                <button type="button" class="btn btn-outline-light">Login / Register</button>
+            </a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="col">
+            <div class="jumbotron" style="margin-top: 4%">
+                <h1 class="display-4">Login</h1>
+                <p class="lead">Login to an existing account to access your services!</p>
+                <hr class="my-4">
+                <form>
+                    <div class="input-group flex-nowrap">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="addon-wrapping">@</span>
+                        </div>
+                        <input name="identifier" type="text" class="form-control" placeholder="Username or email"
+                            aria-label="Username" aria-describedby="addon-wrapping" required>
+                    </div>
+                    <br>
+                    <div class="input-group flex-nowrap">
+                        <input name="pwd" type="password" class="form-control" placeholder="Password" aria-label="Username"
+                            aria-describedby="addon-wrapping" required>
+                    </div>
+                </form>
+                <button class="btn btn-dark btn-block" type="submit">Login</button>
+            </div>
+        </div>
+        <div class="col">
+            <div class="jumbotron vertical-center">
+                <h1 class="display-4">Register</h1>
+                <p class="lead">Get started with using Driplet!</p>
+                <hr class="my-4">
+                <form>
+                    <div class="input-group flex-nowrap">
+                        <input name="email" type="text" class="form-control" placeholder="Email Address"
+                            aria-label="Username" aria-describedby="addon-wrapping" required>
+                    </div>
+                    <br>
+                    <div class="input-group flex-nowrap">
+                            <input name="username" type="text" class="form-control" placeholder="Username"
+                                aria-label="Username" aria-describedby="addon-wrapping" required>
+                        </div>
+                    <br>
+                    <div class="input-group flex-nowrap">
+                        <input name="pwd" type="password" class="form-control" placeholder="Password" aria-label="Username"
+                            aria-describedby="addon-wrapping" required>
+                    </div>
+                </form>
+                <button class="btn btn-dark btn-block" type="submit">Register</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
