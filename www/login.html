@@ -4,6 +4,7 @@
     <title>Driplet - Login</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -40,12 +41,12 @@
                             aria-label="Username" aria-describedby="addon-wrapping" required>
                     </div>
                     <br>
-                    <div class="input-group flex-nowrap">
+                    <div class="input-group flex-nowrap" id="login-password-field">
                         <input name="pwd" type="password" class="form-control" placeholder="Password" aria-label="Username"
                             aria-describedby="addon-wrapping" required>
                     </div>
                 </form>
-                <button class="btn btn-dark btn-block" type="submit">Login</button>
+                <button class="btn btn-dark btn-block" id="login-button" type="submit" onclick="login()">Login</button>
             </div>
         </div>
         <div class="col">
@@ -55,24 +56,25 @@
                 <hr class="my-4">
                 <form>
                     <div class="input-group flex-nowrap">
-                        <input name="email" type="text" class="form-control" placeholder="Email Address"
+                        <input id="reg-email-address" name="email" type="text" class="form-control" placeholder="Email Address"
                             aria-label="Username" aria-describedby="addon-wrapping" required>
                     </div>
                     <br>
                     <div class="input-group flex-nowrap">
-                            <input name="username" type="text" class="form-control" placeholder="Username"
+                            <input id="reg-username" name="username" type="text" class="form-control" placeholder="Username"
                                 aria-label="Username" aria-describedby="addon-wrapping" required>
                         </div>
                     <br>
                     <div class="input-group flex-nowrap">
-                        <input name="pwd" type="password" class="form-control" placeholder="Password" aria-label="Username"
+                        <input id="reg-password-field" name="pwd" type="password" class="form-control" placeholder="Password" aria-label="Username"
                             aria-describedby="addon-wrapping" required>
                     </div>
                 </form>
-                <button class="btn btn-dark btn-block" type="submit">Register</button>
+                <button class="btn btn-dark btn-block" id="register-button" type="submit" onclick="register()">Register</button>
             </div>
         </div>
     </div>
 </body>
+<script src="app/login.js"></script>
 
 </html>

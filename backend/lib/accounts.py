@@ -42,8 +42,6 @@ def push_user(user):
 class registration(Resource):
     def post(self): 
         parser = reqparse.RequestParser()
-        parser.add_argument("first_name")
-        parser.add_argument("last_name")
         parser.add_argument("username")
         parser.add_argument("email")
         parser.add_argument("password")
@@ -55,8 +53,6 @@ class registration(Resource):
                 return "A user with that email already exists", 400
         
         user = {
-            "first_name":args['first_name'],
-            "last_name":args['last_name'],
             "username":args['username'],
             "email":args['email'],
             "password":args['password'],
@@ -85,8 +81,6 @@ class acmang(Resource):
 
     def patch(self, client_id):
         parser = reqparse.RequestParser()
-        parser.add_argument("first_name")
-        parser.add_argument("last_name")
         parser.add_argument("username")
         parser.add_argument("email")
         parser.add_argument("password")
