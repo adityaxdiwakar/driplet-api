@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <title>Driplet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="assets/sidebar.css" rel="stylesheet">
+    <link href="assets/services.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Driplet</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <a href="login.html">
+                <button type="button" class="btn btn-outline-light">Login / Register</button>
+            </a>
+        </div>
+    </nav>
+    <div class="container-fluid" id="wrapper">
+        <div class="row">
+            <div class="bg-light border-right" id="sidebar-wrapper">
+                <div class="sidebar-heading">Your Services</div>
+                <div class="list-group list-group-flush">
+                    <!--<button href="#" class="list-group-item list-group-item-action bg-light"></button>-->
+                    <a href="#" class="list-group-item list-group-item-action bg-light">Create new...</a>
+                </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+            <div class="service_page">
+                <h1>Nginx</h1>
+                <div class="service-log">
+                </div>
+                <div class="row">
+                    <div class="col-md-4" style="padding-right: 15px; padding-left: 15px;">
+                        <button class="btn btn-success btn-block">Start</button>
+                    </div>
+                    <div class="col-md-4" style="padding-right: 15px; padding-left: 0px;">
+                        <button class="btn btn-danger btn-block">Stop</button>
+                    </div>
+                    <div class="col-md-4" style="padding-right: 15px; padding-left: 0px;">
+                        <button class="btn btn-warning btn-block">Restart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
