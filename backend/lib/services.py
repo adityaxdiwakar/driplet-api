@@ -51,6 +51,7 @@ class manager(Resource):
         parser.add_argument("name")
         parser.add_argument("start_command")
         parser.add_argument("stop_command")
+        parser.add_argument("restart_command")
         parser.add_argument("status_command")
         parser.add_argument("log_command")
         args = parser.parse_args()
@@ -60,6 +61,7 @@ class manager(Resource):
             "id": get_service_id(get_services(client_id)),
             "start_command": args['start_command'],
             "stop_command": args['stop_command'],
+            "restart_command": args['restart_command'],
             "status_command": args['status_command'],
             "log_command": args['log_command'],
             "port": allocate_new_port()
@@ -95,3 +97,26 @@ class manager_indv(Resource):
                 push_services(preq, client_id)
                 return preq
 
+class start(Resource):
+    def post(self, client_id, service_id):
+        services = get_services(client_id)
+        for service in services:
+            if service['id'] == service_id:
+                os.system(service['start_command'])
+                return service, 200
+
+class stop(Resource):
+    def post(self, client_id, service_id):
+        services = get_services(client_id)
+        for service in services:
+            if service['id'] == service_id:
+                os.system(service['stop_command'])
+                return service, 200
+
+class restart(Resource):
+    def post(self, client_id, service_id):
+        services = get_services(client_id)
+        for service in services:
+            if service['id'] == service_id:
+                os.system(service['restart_command'])
+                return service, 200

@@ -5,7 +5,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="assets/sidebar.css" rel="stylesheet">
+    <script src="https://raw.githubusercontent.com/socketio/socket.io-client/master/dist/socket.io.js"></script>
     <link href="assets/services.css" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -43,13 +45,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4" style="padding-right: 15px; padding-left: 15px;">
-                        <button class="btn btn-success btn-block">Start</button>
+                        <button onclick="start_service()" class="btn btn-success btn-block">Start</button>
                     </div>
                     <div class="col-md-4" style="padding-right: 15px; padding-left: 0px;">
-                        <button class="btn btn-danger btn-block">Stop</button>
+                        <button onclick="stop_service()" class="btn btn-danger btn-block">Stop</button>
                     </div>
                     <div class="col-md-4" style="padding-right: 15px; padding-left: 0px;">
-                        <button class="btn btn-warning btn-block">Restart</button>
+                        <button onclick="restart_service()" class="btn btn-warning btn-block">Restart</button>
                     </div>
                 </div>
             </div>
@@ -57,5 +59,5 @@
 
     </div>
 </body>
-
+<script src="app/services.js"></script>
 </html>
