@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="assets/sidebar.css" rel="stylesheet">
-    <script src="https://raw.githubusercontent.com/socketio/socket.io-client/master/dist/socket.io.js"></script>
     <link href="assets/services.css" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
@@ -41,7 +40,7 @@
             <!-- /#sidebar-wrapper -->
             <div class="service_page">
                 <h1>Nginx</h1>
-                <div class="service-log">
+                <div id="output" class="service-log">
                 </div>
                 <div class="row">
                     <div class="col-md-4" style="padding-right: 15px; padding-left: 15px;">

@@ -27,3 +27,11 @@ function restart_service() {
             console.log(error);
         });
 }
+
+log = document.getElementById('output')
+console.log("Connecting to WS")
+let connection = new WebSocket('ws://localhost:46079');
+connection.onmessage = async function (e) {
+    var text = await (new Response(e.data)).text();
+    log.innerHTML += text + "<br>"
+};
