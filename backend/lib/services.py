@@ -1,5 +1,5 @@
 #general requirements
-import time, json, os, random, systemctl, threading
+import time, json, os, random, systemctl, threading, asyncio
 
 #API dependencies
 from flask import Flask
@@ -89,6 +89,7 @@ class manager_indv(Resource):
                 })
                 websockets[client_id][service_id].start()
                 return service
+        return {"message": "User could not be found", "code": 404}, 404
     def delete(self, client_id, service_id):
         services = get_services(client_id)
         for x in range(len(services)):
