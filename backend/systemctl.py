@@ -9,7 +9,6 @@ import sys
 async def listener(websocket, path, service):
   command = service['log_command']
   p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
-  prev_sd = "-1"
   while True:
     await websocket.send(p.stdout.readline())
 
