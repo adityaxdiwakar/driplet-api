@@ -5,6 +5,9 @@
     height: 35%;
     border-radius: 5px;
     margin-bottom: 7.5px;
+    font-size: 12px;
+    padding: 8px;
+    overflow:scroll;
 }
 
 .service_page {
