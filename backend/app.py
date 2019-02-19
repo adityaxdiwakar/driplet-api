@@ -1,3 +1,5 @@
+import threading
+
 #custom dependencies
 from lib import services, accounts, sockets
 
@@ -5,12 +7,12 @@ from lib import services, accounts, sockets
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
 
+#runs the sockets, what else? lol
+sockets.run()
+
 #initiializing the flask webapp
 app = Flask(__name__)
 api = Api(app)
-
-#runs the sockets, what else? lol
-sockets.run()
 
 #writing services endpoints
 api.add_resource(services.manager, "/endpoints/<string:client_id>/services")
@@ -24,4 +26,4 @@ api.add_resource(accounts.registration, "/endpoints/register")
 api.add_resource(accounts.acmang, "/endpoints/accounts/<string:client_id>")
 
 #running and setting host port (local for nginx reverse proxy)
-app.run(host='0.0.0.0', port=3141, debug=True)
+app.run(host='127.0.0.1', port=3141, debug=True)

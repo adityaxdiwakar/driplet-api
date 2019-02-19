@@ -3,6 +3,7 @@ import functools
 import asyncio
 import subprocess
 import zmq
+import threading
 import time
 import sys
 import os
@@ -28,4 +29,5 @@ def run():
             open(f"bin/{user}/services.json")
         )
         for service in services:
-            listen(service)
+            thread = threading.Thread(target=listen, args=[service], name=f"{users}:{service['id']}")
+            thread.start()
