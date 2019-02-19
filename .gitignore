@@ -3,3 +3,4 @@ backend/bin/
 *.txt
 *.pyc
 backend/global_bin/
+*.json
