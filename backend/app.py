@@ -1,11 +1,16 @@
-from lib import services, accounts
+#custom dependencies
+from lib import services, accounts, sockets
 
+#flask dependencies
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
 
 #initiializing the flask webapp
 app = Flask(__name__)
 api = Api(app)
+
+#runs the sockets, what else? lol
+sockets.run()
 
 #writing services endpoints
 api.add_resource(services.manager, "/endpoints/<string:client_id>/services")
