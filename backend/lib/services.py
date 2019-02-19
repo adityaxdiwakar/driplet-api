@@ -1,5 +1,5 @@
 #general requirements
-import time, json, os, random, systemctl, threading, asyncio
+import time, json, os, random, threading, asyncio
 
 #API dependencies
 from flask import Flask
