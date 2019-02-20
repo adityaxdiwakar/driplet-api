@@ -2,13 +2,16 @@
 from passlib.apps import custom_app_context as pwd_context
 
 #general requirements
-import time, json, os, random, shutil, jwt
+import time, json, os, random, shutil, string, jwt
 
 #API dependencies
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
 
 #helper functions
+def random_salt(size=1024, chars=string.ascii_uppercase + string.digits + string.ascii_lowercase):
+        return ''.join(random.choice(chars) for _ in range(size))
+
 def get_user_id():
     while True:
         r = random.randint(1000000000,9999999999)
@@ -42,8 +45,13 @@ def push_user(user):
         indent = 4
     )
 
-def generate_token(user):
-    token = jwt.encode(user, os.getenv('JWT_SECRET'), algorithm='HS256')
+def public_user(user):
+    user.pop('salt')
+    user.pop('password')
+    return user
+
+def generate_token(user, salt):
+    token = jwt.encode(user, salt, algorithm='HS256')
     return token
 
 class registration(Resource):
@@ -69,25 +77,33 @@ class registration(Resource):
             "time_created":int(time.time())
         }
         
-        generate_token(user)
+        salt = random_salt()
+        
+        user.update(
+            {
+                "salt": salt
+            }
+        )
+
         users.append(user)
         push_user(user)
 
+        user.pop('salt')
         user.update(
             {
-                "token": generate_token(user).decode('utf-8')
+                "token": generate_token(user, salt).decode('utf-8')
             }
         )
+        user.pop('password')
         return user, 201
 
 class acmang(Resource):
     def get(self, client_id):
         user = get_user(client_id)
-        user.pop('password')
         if user == None:
             return {"message": "User could not be found", "code": 404}, 404
         else:
-            return user
+            return public_user(user)
 
     def delete(self, client_id):
         users = get_users()
@@ -106,8 +122,11 @@ class acmang(Resource):
         updates = {}
         for key in args:
             if args[key] != None:
+
                 updates.update({key:args[key]})
-                
+        if 'password' in updates:
+            updates['password'] = pwd_context.hash(updates['password'])
+
         users = get_users()
         for user in users:
             if user['id'] == client_id:
@@ -117,5 +136,5 @@ class acmang(Resource):
                     open(f"bin/{client_id}/account.json", "w"),
                     indent = 4
                 )
-                return user, 200
+                return public_user(user), 200
         return {"message": "User could not be found", "code": 404}, 404

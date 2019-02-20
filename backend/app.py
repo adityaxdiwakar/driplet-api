@@ -1,7 +1,3 @@
-#environment variables
-from dotenv import load_dotenv
-load_dotenv()
-
 #custom dependencies
 from lib import services, accounts, sockets
 
