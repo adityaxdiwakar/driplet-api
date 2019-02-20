@@ -1,5 +1,8 @@
+#password hashing
+from passlib.apps import custom_app_context as pwd_context
+
 #general requirements
-import time, json, os, random, shutil
+import time, json, os, random, shutil, jwt
 
 #API dependencies
 from flask import Flask
@@ -39,6 +42,10 @@ def push_user(user):
         indent = 4
     )
 
+def generate_token(user):
+    token = jwt.encode(user, os.getenv('JWT_SECRET'), algorithm='HS256')
+    return token
+
 class registration(Resource):
     def post(self): 
         parser = reqparse.RequestParser()
@@ -51,21 +58,32 @@ class registration(Resource):
         for user in users:
             if user['email'] == args['email']:
                 return "A user with that email already exists", 400
+            if user['username'] == args['username']:
+                return "A user with that username already exists", 400
         
         user = {
             "username":args['username'],
             "email":args['email'],
-            "password":args['password'],
-            "id":get_user_id()
+            "password": pwd_context.hash(args['password']),
+            "id":get_user_id(),
+            "time_created":int(time.time())
         }
-
+        
+        generate_token(user)
         users.append(user)
         push_user(user)
+
+        user.update(
+            {
+                "token": generate_token(user).decode('utf-8')
+            }
+        )
         return user, 201
 
 class acmang(Resource):
     def get(self, client_id):
         user = get_user(client_id)
+        user.pop('password')
         if user == None:
             return {"message": "User could not be found", "code": 404}, 404
         else:

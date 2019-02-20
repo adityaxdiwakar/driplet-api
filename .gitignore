@@ -4,3 +4,4 @@ backend/bin/
 *.pyc
 backend/global_bin/
 *.json
+*.env
