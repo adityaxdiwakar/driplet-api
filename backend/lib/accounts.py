@@ -138,3 +138,26 @@ class acmang(Resource):
                 )
                 return public_user(user), 200
         return {"message": "User could not be found", "code": 404}, 404
+
+
+class login(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument("username")
+        parser.add_argument("password")      
+        args = parser.parse_args()  
+
+        users = get_users()
+        for user in users:
+            if user['username'] == args['username']:
+                if pwd_context.verify(args['password'], user['password']):
+                    salt = user['salt']
+                    user.pop('salt')
+                    user.update({
+                        "token": generate_token(user, salt).decode('utf-8')
+                    })
+                    user.pop('password')
+                    return user, 200
+                else:
+                    return {"message": "Authorization failed", "code": 401}, 401
+        return {"message": "User could not be found", "code": 404}, 404 
