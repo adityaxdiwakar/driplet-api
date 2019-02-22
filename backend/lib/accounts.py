@@ -50,7 +50,8 @@ def public_user(user):
     user.pop('password')
     return user
 
-def generate_token(user, salt):
+def generate_token(user, salt): 
+    user.pop('salt')   
     token = jwt.encode(user, salt, algorithm='HS256')
     return token
 
@@ -88,12 +89,12 @@ class registration(Resource):
         users.append(user)
         push_user(user)
 
-        user.pop('salt')
         user.update(
             {
                 "token": generate_token(user, salt).decode('utf-8')
             }
         )
+        user.pop('salt')
         user.pop('password')
         return user, 201
 
@@ -118,6 +119,7 @@ class acmang(Resource):
         parser.add_argument("username")
         parser.add_argument("email")
         parser.add_argument("password")
+        parser.add_argument("authorization")
         args = parser.parse_args()
         updates = {}
         for key in args:
@@ -152,7 +154,6 @@ class login(Resource):
             if user['username'] == args['username']:
                 if pwd_context.verify(args['password'], user['password']):
                     salt = user['salt']
-                    user.pop('salt')
                     user.update({
                         "token": generate_token(user, salt).decode('utf-8')
                     })
