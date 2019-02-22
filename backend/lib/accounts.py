@@ -90,14 +90,13 @@ class acmang(Resource):
             if args[key] != None:
                 updates.update({key:args[key]})
                 
-        users = get_users()
-        for user in users:
-            if user['id'] == client_id:
-                user.update(updates)
-                json.dump(
-                    user,
-                    open(f"bin/{client_id}/account.json", "w"),
-                    indent = 4
-                )
-                return user, 200
-        return {"message": "User could not be found", "code": 404}, 404
+        user = get_user(client_id)
+        if user == None:
+            return {"message": "User could not be found", "code": 404}, 404
+        user.update(updates)
+        json.dump(
+            user,
+            open(f"bin/{client_id}/account.json", "w"),
+            indent = 4
+        )
+        return user, 200
