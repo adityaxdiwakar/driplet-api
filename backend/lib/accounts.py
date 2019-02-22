@@ -124,23 +124,20 @@ class acmang(Resource):
         updates = {}
         for key in args:
             if args[key] != None:
-
                 updates.update({key:args[key]})
-        if 'password' in updates:
-            updates['password'] = pwd_context.hash(updates['password'])
-
-        users = get_users()
-        for user in users:
-            if user['id'] == client_id:
-                user.update(updates)
-                json.dump(
-                    user,
-                    open(f"bin/{client_id}/account.json", "w"),
-                    indent = 4
-                )
-                return public_user(user), 200
-        return {"message": "User could not be found", "code": 404}, 404
-
+                
+        user = get_user(client_id)
+        if user == None:
+            return {"message": "User could not be found", "code": 404}, 404
+        user.update(updates)
+        json.dump(
+            user,
+            open(f"bin/{client_id}/account.json", "w"),
+            indent = 4
+        )
+        user.pop('salt')
+        user.pop('password')
+        return user, 200
 
 class login(Resource):
     def post(self):
