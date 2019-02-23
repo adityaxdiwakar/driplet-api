@@ -1,19 +1,4 @@
-import websockets
-import functools
-import asyncio
-import subprocess
-import zmq
-import threading
-import time
-import sys
-import os
-import json
-import tornado.web
-import tornado.httpserver
-import tornado.ioloop
-import tornado.websocket
-import tornado.options
-
+import websockets, functools, asyncio, subprocess, zmq, threading, time, sys, os, json, tornado.web, tornado.httpserver, tornado.ioloop, tornado.websocket, tornado.options
 
 class ChannelHandler(tornado.websocket.WebSocketHandler):
 
@@ -28,6 +13,7 @@ class ChannelHandler(tornado.websocket.WebSocketHandler):
             return
         
         if "creds" not in request or "data" not in request:
+            self.write_message("Malformed request.")
             return
 
         if request['creds']['id'] == "u2852334499":

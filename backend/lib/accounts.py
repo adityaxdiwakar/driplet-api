@@ -8,6 +8,13 @@ import time, json, os, random, shutil, string, jwt
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
 
+#string definitions
+NOT_FOUND = {"message": "User could not be found", "code": 404}
+AUTH_FAILED = {"message": "Authorization failed", "code": 401}
+UNAME_EXISTS = {"message": "A user with that username already exists", "code": 400}
+EMAIL_EXISTS = {"message": "A user with that email already exists", "code": 400}
+
+
 #helper functions
 def random_salt(size=1024, chars=string.ascii_uppercase + string.digits + string.ascii_lowercase):
         return ''.join(random.choice(chars) for _ in range(size))
@@ -55,6 +62,19 @@ def generate_token(user, salt):
     token = jwt.encode(user, salt, algorithm='HS256')
     return token
 
+def authenticate_user(client_id, token):
+    user = get_user(client_id)
+    if user == None:
+        return NOT_FOUND, 404
+    try:
+        payload = jwt.decode(token, user['salt'], algorithms=['HS256'])
+    except:
+        return AUTH_FAILED, 401
+    if 'id' in payload:
+        if payload['id'] == user['id']:
+            return 200
+    return AUTH_FAILED, 401
+
 class registration(Resource):
     def post(self): 
         parser = reqparse.RequestParser()
@@ -66,9 +86,9 @@ class registration(Resource):
         users = get_users()
         for user in users:
             if user['email'] == args['email']:
-                return {"message": "A user with that email already exists", "code": 400}, 400
+                return EMAIL_EXISTS, 400
             if user['username'] == args['username']:
-                return {"message": "A user with that username already exists", "code": 400}, 400
+                return UNAME_EXISTS, 400
         
         user = {
             "username":args['username'],
@@ -101,7 +121,7 @@ class acmang(Resource):
     def get(self, client_id):
         user = get_user(client_id)
         if user == None:
-            return {"message": "User could not be found", "code": 404}, 404
+            return NOT_FOUND, 404
         else:
             return public_user(user)
 
@@ -111,7 +131,7 @@ class acmang(Resource):
             if user['id'] == client_id:
                 shutil.rmtree(f"bin/{client_id}")
                 return "", 204
-        return {"message": "User could not be found", "code": 404}, 404
+        return NOT_FOUND, 404
 
     def patch(self, client_id):
         parser = reqparse.RequestParser()
@@ -127,7 +147,7 @@ class acmang(Resource):
                 
         user = get_user(client_id)
         if user == None:
-            return {"message": "User could not be found", "code": 404}, 404
+            return NOT_FOUND, 404
         user.update(updates)
         json.dump(
             user,
@@ -156,5 +176,5 @@ class login(Resource):
                     user.pop('password')
                     return user, 200
                 else:
-                    return {"message": "Authorization failed", "code": 401}, 401
-        return {"message": "User could not be found", "code": 404}, 404 
+                    return AUTH_FAILED, 401
+        return NOT_FOUND, 404 

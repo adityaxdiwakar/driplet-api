@@ -1,8 +1,9 @@
 #general requirements
 import time, json, os, random, threading, asyncio
+from lib import accounts
 
 #API dependencies
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
 
 #helper functions
@@ -43,6 +44,11 @@ def allocate_new_port():
 
 class manager(Resource):
     def get(self, client_id):
+        request_token = request.headers.get('authorization')
+        auth = accounts.authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
+        
         return get_services(client_id)
     def post(self, client_id):
         user_services = get_services(client_id)
