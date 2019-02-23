@@ -29,7 +29,7 @@ def push_services(data, client_id):
 
 def allocate_new_port():
     used_ports = json.load(
-        open("global_bin/used_ports.json", "r")
+        open("used_ports.json", "r")
     )
     while True:
         r = random.randint(3142, 99999)
@@ -37,7 +37,7 @@ def allocate_new_port():
             used_ports.append(r)
             json.dump(
                 used_ports,
-                open("global_bin/used_ports.json", "w"),
+                open("used_ports.json", "w"),
                 indent = 4
             )
             return r
@@ -48,11 +48,13 @@ class manager(Resource):
         auth = accounts.authenticate_user(client_id, request_token)
         if auth != 200:
             return auth
-        
         return get_services(client_id)
     def post(self, client_id):
+        request_token = request.headers.get('authorization')
+        auth = accounts.authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
         user_services = get_services(client_id)
-        
         parser = reqparse.RequestParser()
         parser.add_argument("name")
         parser.add_argument("start_command")
