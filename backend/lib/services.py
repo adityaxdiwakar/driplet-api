@@ -26,21 +26,6 @@ def push_services(data, client_id):
     with open(f"bin/{client_id}/services.json", "w") as f:
         json.dump(data, f, indent=4)
 
-def allocate_new_port():
-    used_ports = json.load(
-        open("global_bin/used_ports.json", "r")
-    )
-    while True:
-        r = random.randint(3142, 99999)
-        if r not in used_ports:
-            used_ports.append(r)
-            json.dump(
-                used_ports,
-                open("global_bin/used_ports.json", "w"),
-                indent = 4
-            )
-            return r
-
 class manager(Resource):
     def get(self, client_id):
         return get_services(client_id)
@@ -63,8 +48,7 @@ class manager(Resource):
             "stop_command": args['stop_command'],
             "restart_command": args['restart_command'],
             "status_command": args['status_command'],
-            "log_command": args['log_command'],
-            "port": allocate_new_port()
+            "log_command": args['log_command']
         }
 
         user_services.append(service)
