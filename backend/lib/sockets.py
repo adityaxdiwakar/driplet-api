@@ -12,18 +12,17 @@ class ChannelHandler(tornado.websocket.WebSocketHandler):
             self.write_message("Malformed request.")
             return
         
-        if "creds" not in request or "data" not in request:
+        if "authentication" not in request or "service" not in request:
             self.write_message("Malformed request.")
             return
 
-        if request['creds']['id'] == "u2852334499":
-            self.write_message("Authentication was successful.")
-            threading.Thread(target=self.bind, args=[request['data']]).start()
-        else:
-            self.write_message(json.dumps({
-                "message":"Authentication failed",
-                "code":401
-            }))
+        auth = accounts.authenticate_user(client_id, request_token)
+        if auth != 200:
+            self.write_message(accounts.AUTH_FAILED)
+            return
+
+        self.write_message("Authentication was successful.")
+        threading.Thread(target=self.bind, args=[request['service']]).start()
 
     def bind(self, service):
         asyncio.set_event_loop(asyncio.new_event_loop())
