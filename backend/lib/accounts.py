@@ -66,9 +66,9 @@ class registration(Resource):
         users = get_users()
         for user in users:
             if user['email'] == args['email']:
-                return "A user with that email already exists", 400
+                return {"message": "A user with that email already exists", "code": 400}, 400
             if user['username'] == args['username']:
-                return "A user with that username already exists", 400
+                return {"message": "A user with that username already exists", "code": 400}, 400
         
         user = {
             "username":args['username'],
@@ -94,7 +94,6 @@ class registration(Resource):
                 "token": generate_token(user, salt).decode('utf-8')
             }
         )
-        user.pop('salt')
         user.pop('password')
         return user, 201
 
