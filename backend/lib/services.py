@@ -27,24 +27,6 @@ def push_services(data, client_id):
     with open(f"bin/{client_id}/services.json", "w") as f:
         json.dump(data, f, indent=4)
 
-<<<<<<< HEAD
-def allocate_new_port():
-    used_ports = json.load(
-        open("used_ports.json", "r")
-    )
-    while True:
-        r = random.randint(3142, 99999)
-        if r not in used_ports:
-            used_ports.append(r)
-            json.dump(
-                used_ports,
-                open("used_ports.json", "w"),
-                indent = 4
-            )
-            return r
-
-=======
->>>>>>> master
 class manager(Resource):
     def get(self, client_id):
         request_token = request.headers.get('authorization')
@@ -83,6 +65,11 @@ class manager(Resource):
 
 class manager_indv(Resource):
     def get(self, client_id, service_id):
+        request_token = request.headers.get('authorization')
+        auth = accounts.authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
+            
         services = get_services(client_id)
         for service in services:
             if service['id'] == service_id:
