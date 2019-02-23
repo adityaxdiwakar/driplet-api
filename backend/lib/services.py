@@ -80,7 +80,7 @@ class manager_indv(Resource):
         auth = accounts.authenticate_user(client_id, request_token)
         if auth != 200:
             return auth
-            
+
         services = get_services(client_id)
         for x in range(len(services)):
             if services[x]['id'] == service_id:
@@ -90,6 +90,11 @@ class manager_indv(Resource):
 
 class start(Resource):
     def post(self, client_id, service_id):
+        request_token = request.headers.get('authorization')
+        auth = accounts.authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
+
         services = get_services(client_id)
         for service in services:
             if service['id'] == service_id:
@@ -98,6 +103,11 @@ class start(Resource):
 
 class stop(Resource):
     def post(self, client_id, service_id):
+        request_token = request.headers.get('authorization')
+        auth = accounts.authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
+
         services = get_services(client_id)
         for service in services:
             if service['id'] == service_id:
@@ -106,6 +116,11 @@ class stop(Resource):
 
 class restart(Resource):
     def post(self, client_id, service_id):
+        request_token = request.headers.get('authorization')
+        auth = accounts.authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
+            
         services = get_services(client_id)
         for service in services:
             if service['id'] == service_id:
