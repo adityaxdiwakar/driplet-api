@@ -69,13 +69,18 @@ class manager_indv(Resource):
         auth = accounts.authenticate_user(client_id, request_token)
         if auth != 200:
             return auth
-            
+
         services = get_services(client_id)
         for service in services:
             if service['id'] == service_id:
                 return service
         return {"message": "Service could not be found", "code": 404}, 404
     def delete(self, client_id, service_id):
+        request_token = request.headers.get('authorization')
+        auth = accounts.authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
+            
         services = get_services(client_id)
         for x in range(len(services)):
             if services[x]['id'] == service_id:
