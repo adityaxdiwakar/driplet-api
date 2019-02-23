@@ -55,25 +55,13 @@ class manager(Resource):
         push_services(user_services, client_id)
         return service, 201
 
-websockets = {}
-
 class manager_indv(Resource):
     def get(self, client_id, service_id):
         services = get_services(client_id)
         for service in services:
             if service['id'] == service_id:
-                websockets.update({
-                    client_id: {
-                        service_id: threading.Thread(
-                            name=str(f"{client_id}:{service_id}"), 
-                            target=systemctl.listen,
-                            args=[service]
-                        )
-                    }
-                })
-                websockets[client_id][service_id].start()
                 return service
-        return {"message": "User could not be found", "code": 404}, 404
+        return {"message": "Service could not be found", "code": 404}, 404
     def delete(self, client_id, service_id):
         services = get_services(client_id)
         for x in range(len(services)):
