@@ -37,13 +37,14 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="addon-wrapping">@</span>
                         </div>
-                        <input name="identifier" id="login-username" type="text" class="form-control" placeholder="Username or email"
-                            aria-label="Username" aria-describedby="addon-wrapping" required>
+                        <input name="identifier" id="login-username" type="text" class="form-control"
+                            placeholder="Username or email" aria-label="Username" aria-describedby="addon-wrapping"
+                            required>
                     </div>
                     <br>
                     <div class="input-group flex-nowrap">
-                        <input id="login-password-field" name="pwd" type="password" class="form-control" placeholder="Password" aria-label="Username"
-                            aria-describedby="addon-wrapping" required>
+                        <input id="login-password-field" name="pwd" type="password" class="form-control"
+                            placeholder="Password" aria-label="Username" aria-describedby="addon-wrapping" required>
                     </div>
                 </form>
                 <button class="btn btn-dark btn-block" id="login-button" type="submit" onclick="login()">Login</button>
@@ -56,25 +57,90 @@
                 <hr class="my-4">
                 <form>
                     <div class="input-group flex-nowrap">
-                        <input id="reg-email-address" name="email" type="text" class="form-control" placeholder="Email Address"
+                        <input id="reg-email-address" name="email" type="text" class="form-control"
+                            placeholder="Email Address" aria-label="Username" aria-describedby="addon-wrapping"
+                            required>
+                    </div>
+                    <br>
+                    <div class="input-group flex-nowrap">
+                        <input id="reg-username" name="username" type="text" class="form-control" placeholder="Username"
                             aria-label="Username" aria-describedby="addon-wrapping" required>
                     </div>
                     <br>
                     <div class="input-group flex-nowrap">
-                            <input id="reg-username" name="username" type="text" class="form-control" placeholder="Username"
-                                aria-label="Username" aria-describedby="addon-wrapping" required>
-                        </div>
-                    <br>
-                    <div class="input-group flex-nowrap">
-                        <input id="reg-password-field" name="pwd" type="password" class="form-control" placeholder="Password" aria-label="Username"
-                            aria-describedby="addon-wrapping" required>
+                        <input id="reg-password-field" name="pwd" type="password" class="form-control"
+                            placeholder="Password" aria-label="Username" aria-describedby="addon-wrapping" required>
                     </div>
                 </form>
-                <button class="btn btn-dark btn-block" id="register-button" type="submit" onclick="register()">Register</button>
+                <button class="btn btn-dark btn-block" id="register-button" type="submit"
+                    onclick="register()">Register</button>
             </div>
         </div>
     </div>
 </body>
-<script src="app/login.js"></script>
+<script>
+    // Get the input field
+    var password_input = document.getElementById("login-password-field");
+
+    password_input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("login-button").click();
+        }
+    });
+
+    var registration_input = document.getElementById("reg-password-field")
+
+    registration_input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+            event.preventDefault();
+            document.getElementById("register-button").click()
+        }
+    })
+
+    function login() {
+        username = document.getElementById('login-username').value;
+        password = document.getElementById('login-password-field').value;
+        if (username == "" || password == "") {
+            alert("Please fill out the fields entirely")
+            return
+        }
+        axios.post('http://localhost:3141/endpoints/login', {
+            username: username,
+            password: password
+        })
+            .then((response) => {
+                document.cookie = "userid=" + String(response['data']['id']);
+                document.cookie = "token=" + String(response['data']['token']);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    function register() {
+        email = document.getElementById('reg-email-address').value;
+        username = document.getElementById('reg-username').value;
+        password = document.getElementById('reg-password-field').value;
+        if (email == "" || username == "" || password == "") {
+            alert("Please fill out the fields entirely.")
+            return
+        }
+        axios.post('http://localhost:3141/endpoints/register', {
+            email: email,
+            username: username,
+            password: password
+        })
+            .then(function (response) {
+                document.cookie = "userid=" + String(response['id']);
+                document.cookie = "token=" + String(response['token']);
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+</script>
+
 
 </html>
