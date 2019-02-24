@@ -27,7 +27,7 @@
         }
     </style>
     <script>
-        axios.defaults.headers.common['authorization'] = getCookie('token');
+        axios.defaults.headers.common['authorization'] = <%= token %>
     </script>
 </head>
 
