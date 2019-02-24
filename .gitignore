@@ -5,3 +5,4 @@ backend/bin/
 backend/global_bin/
 *.json
 *.env
+www/node_modules

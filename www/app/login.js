@@ -9,7 +9,20 @@ password_input.addEventListener("keyup", function(event) {
 });
 
 function login() {
-    console.log("In development...")
+    username = document.getElementById('login-username').value;
+    password = document.getElementById('login-password-field').value;
+    console.log(password)
+    if (username == "" || password == "") {
+      alert("Please fill out the fields entirely")
+      return
+    }
+    axios.post('http://localhost:3141/endpoints/login', {
+      username: username,
+      password: password
+    })
+    .then(function (response) {
+      console.log(response['data'])
+    })
 }
 
 var registration_input = document.getElementById("reg-password-field")
@@ -35,6 +48,8 @@ function register() {
         password: password
       })
       .then(function (response) {
+        document.cookie = "userid=" + String(response['id']);
+        document.cookie = "token=" + String(response['token']);
         console.log(response);
       })
       .catch(function (error) {

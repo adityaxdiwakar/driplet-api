@@ -12,6 +12,12 @@ sockets.run()
 app = Flask(__name__)
 api = Api(app)
 
+#global headers
+@app.after_request
+def apply_caching(response):
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return response
+
 #writing services endpoints
 api.add_resource(services.manager, "/endpoints/<string:client_id>/services")
 api.add_resource(services.manager_indv, "/endpoints/<string:client_id>/services/<string:service_id>")
