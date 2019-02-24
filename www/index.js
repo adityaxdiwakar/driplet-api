@@ -12,4 +12,15 @@ app.get('/login', (req, res) => {
     res.render('login.ejs')
 })
 
+app.get('/:clientid/services', (req, res) => {
+    var clientid = req.params.clientid;
+    
+})
+
+app.get('/:clientid/services/:serviceid', (req, res) => {
+    var clientid = req.params.clientid;
+    var serviceid = req.params.serviceid;
+    res.render('service.ejs', {clientid: clientid, serviceid: serviceid})
+})
+
 app.listen(port, () => console.log("STARTED"))

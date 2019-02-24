@@ -1,0 +1,157 @@
+<html>
+
+<head>
+    <title>Driplet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <style>
+        <% include partials/sidebar %>
+    </style>
+    <style>
+        .service-log {
+            color: white;
+            background-color: black;
+            width: 100%;
+            height: 35%;
+            border-radius: 5px;
+            margin-bottom: 7.5px;
+            font-size: 12px;
+            padding: 8px;
+            overflow: scroll;
+        }
+
+        .service_page {
+            padding: 10px;
+            width: calc(100% - 15.1rem);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Driplet</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+            <a href="login.html">
+                <button type="button" class="btn btn-outline-light">Login / Register</button>
+            </a>
+        </div>
+    </nav>
+    <div class="container-fluid" id="wrapper">
+        <div class="row">
+            <div class="bg-light border-right" id="sidebar-wrapper">
+                <div class="sidebar-heading">Your Services</div>
+                <div class="list-group list-group-flush">
+                    <!--<button href="#" class="list-group-item list-group-item-action bg-light"></button>-->
+                    <a href="#" class="list-group-item list-group-item-action bg-light">Create new...</a>
+                </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+            <div class="service_page">
+                <h1 id="service-name"></h1>
+                <div id="output" class="service-log">
+                    <ul id="log-listings">
+
+                    </ul>
+                </div>
+                <div class="row">
+                    <div class="col-md-4" style="padding-right: 15px; padding-left: 15px;">
+                        <button onclick="start_service()" class="btn btn-success btn-block">Start</button>
+                    </div>
+                    <div class="col-md-4" style="padding-right: 15px; padding-left: 0px;">
+                        <button onclick="stop_service()" class="btn btn-danger btn-block">Stop</button>
+                    </div>
+                    <div class="col-md-4" style="padding-right: 15px; padding-left: 0px;">
+                        <button onclick="restart_service()" class="btn btn-warning btn-block">Restart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script>
+
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+
+    axios.defaults.headers.common['authorization'] = getCookie('token');
+
+    axios.get('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>')
+    .then(function (response) {
+        console.log(response['data'])
+        document.getElementById('service-name').innerText = response['data']['name']
+    }).catch(function (error) {
+        console.log(error)
+    })
+
+    function start_service() {
+        axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/start', {})
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    function stop_service() {
+        axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/stop', {})
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    function restart_service() {
+        axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/restart', {})
+            .then(function (response) {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    function stayDown() {
+        var element = document.getElementById("output")
+        element.scrollTop = element.scrollHeight;
+    }
+
+    log = document.getElementById('output')
+    console.log("Connecting to WS")
+    let connection = new WebSocket('ws://localhost:46079');
+    connection.onmessage = async function (e) {
+        var text = await (new Response(e.data)).text();
+        console.log(text)
+        log.innerHTML += text + "<br>"
+        stayDown()
+    };
+</script>
+
+</html>
