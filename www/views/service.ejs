@@ -26,6 +26,36 @@
             width: calc(100% - 15.1rem);
         }
     </style>
+    <script>
+
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
+
+        axios.defaults.headers.common['authorization'] = getCookie('token');
+
+        axios.get('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>')
+            .then(function (response) {
+                console.log(response['data'])
+            }).catch(function (error) {
+                console.log(error.response.status)
+                if (error.response.status == 404) {
+                    document.body.innerHTML = "This content is not available to you."
+                }
+            })
+    </script>
 </head>
 
 <body>
@@ -82,31 +112,14 @@
 </body>
 <script>
 
-    function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) == ' ') {
-                c = c.substring(1);
-            }
-            if (c.indexOf(name) == 0) {
-                return c.substring(name.length, c.length);
-            }
-        }
-        return "";
-    }
-
-    axios.defaults.headers.common['authorization'] = getCookie('token');
 
     axios.get('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>')
-    .then(function (response) {
-        console.log(response['data'])
-        document.getElementById('service-name').innerText = response['data']['name']
-    }).catch(function (error) {
-        console.log(error)
-    })
+        .then(function (response) {
+            console.log(response['data'])
+            document.getElementById('service-name').innerText = response['data']['name']
+        }).catch(function (error) {
+            console.log(error.response.status)
+        })
 
     function start_service() {
         axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/start', {})
