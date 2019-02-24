@@ -45,16 +45,6 @@
         }
 
         axios.defaults.headers.common['authorization'] = getCookie('token');
-
-        axios.get('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>')
-            .then(function (response) {
-                console.log(response['data'])
-            }).catch(function (error) {
-                console.log(error.response.status)
-                if (error.response.status == 404) {
-                    document.body.innerHTML = "This content is not available to you."
-                }
-            })
     </script>
 </head>
 
@@ -88,7 +78,7 @@
             </div>
             <!-- /#sidebar-wrapper -->
             <div class="service_page">
-                <h1 id="service-name"></h1>
+                <h1><%= servicename %></h1>
                 <div id="output" class="service-log">
                     <ul id="log-listings">
 
@@ -155,16 +145,6 @@
         var element = document.getElementById("output")
         element.scrollTop = element.scrollHeight;
     }
-
-    log = document.getElementById('output')
-    console.log("Connecting to WS")
-    let connection = new WebSocket('ws://localhost:46079');
-    connection.onmessage = async function (e) {
-        var text = await (new Response(e.data)).text();
-        console.log(text)
-        log.innerHTML += text + "<br>"
-        stayDown()
-    };
 </script>
 
 </html>

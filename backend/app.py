@@ -15,7 +15,7 @@ api = Api(app)
 #global headers
 @app.after_request
 def apply_caching(response):
-    response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    response.headers['Access-Control-Allow-Headers'] = 'Content-Type, authorization'
     response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
