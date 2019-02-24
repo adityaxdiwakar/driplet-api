@@ -20,7 +20,6 @@ registration_input.addEventListener("keyup", function (event) {
 function login() {
   username = document.getElementById('login-username').value;
   password = document.getElementById('login-password-field').value;
-  console.log(password)
   if (username == "" || password == "") {
     alert("Please fill out the fields entirely")
     return
@@ -30,8 +29,12 @@ function login() {
     password: password
   })
     .then((response) => {
-      console.log(response)
+      document.cookie = "userid=" + String(response['data']['id']);
+      document.cookie = "token=" + String(response['data']['token']);
     })
+    .catch(function (error) {
+      console.log(error);
+    });
 }
 
 function register() {
