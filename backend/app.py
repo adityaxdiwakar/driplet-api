@@ -16,6 +16,7 @@ api = Api(app)
 @app.after_request
 def apply_caching(response):
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    response.headers['Access-Control-Allow-Origin'] = '*'
     return response
 
 #writing services endpoints
