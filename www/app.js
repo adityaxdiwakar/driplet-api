@@ -43,7 +43,8 @@ app.get('/:clientid/services/:serviceid', async (req, res) => {
                 serviceid: serviceid,
                 clientid: clientid,
                 servicename: request.data.name,
-                token: req.cookies.token
+                token: req.cookies.token,
+                logservice: request.data.log_command
             })
         }
         catch (e) {

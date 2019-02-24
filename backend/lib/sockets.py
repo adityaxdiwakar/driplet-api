@@ -1,32 +1,36 @@
 import websockets, functools, asyncio, subprocess, zmq, threading, time, sys, os, json, tornado.web, tornado.httpserver, tornado.ioloop, tornado.websocket, tornado.options
+from lib import accounts
 
 class ChannelHandler(tornado.websocket.WebSocketHandler):
+
+    def check_origin(self, origin):
+        return True
 
     def on_open(self):
         pass
 
-    def on_message(self, message):
+    def on_message(self, message):  
         try:
             request = json.loads(message)
         except:
             self.write_message("Malformed request.")
             return
         
-        if "authentication" not in request or "service" not in request:
+        if "authentication" not in request or "log_command" not in request:
             self.write_message("Malformed request.")
             return
-
-        auth = accounts.authenticate_user(client_id, request_token)
+    
+        auth = accounts.authenticate_user(request['authentication']['client_id'], request['authentication']['token'])
         if auth != 200:
             self.write_message(accounts.AUTH_FAILED)
             return
 
         self.write_message("Authentication was successful.")
-        threading.Thread(target=self.bind, args=[request['service']]).start()
+        threading.Thread(target=self.bind, args=[request['log_command']]).start()
 
-    def bind(self, service):
+    def bind(self, command):
         asyncio.set_event_loop(asyncio.new_event_loop())
-        p = subprocess.Popen(service['log_command'], stdout=subprocess.PIPE, bufsize=1, shell=True)
+        p = subprocess.Popen(command, stdout=subprocess.PIPE, bufsize=1, shell=True)
         while True:
             self.write_message(p.stdout.readline())
 

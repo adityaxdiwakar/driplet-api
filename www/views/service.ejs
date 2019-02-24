@@ -27,7 +27,39 @@
         }
     </style>
     <script>
-        axios.defaults.headers.common['authorization'] = <%= token %>
+
+        function stayDown() {
+            var element = document.getElementById("output")
+            element.scrollTop = element.scrollHeight;
+        }
+
+        var wsUri = "ws://localhost:3142/";
+        websocket = new WebSocket(wsUri);
+        websocket.onopen = function (evt) {
+            onOpen(evt)
+        };
+        websocket.onmessage = function (evt) {
+            onMessage(evt)
+        };
+
+        function onOpen(evt) {
+            websocket.send(JSON.stringify(
+                {
+                    authentication: {
+                        client_id: "<%=clientid%>",
+                        token: "<%=token%>"
+                    },
+                    log_command: "<%=logservice%>"
+                })
+            )
+        }
+
+        function onMessage(evt) {
+            document.getElementById('output').innerHTML += evt.data + "<br>"
+            stayDown()
+        }
+
+        axios.defaults.headers.common['authorization'] = "<%= token %>"
     </script>
 </head>
 
@@ -63,9 +95,6 @@
             <div class="service_page">
                 <h1><%= servicename %></h1>
                 <div id="output" class="service-log">
-                    <ul id="log-listings">
-
-                    </ul>
                 </div>
                 <div class="row">
                     <div class="col-md-4" style="padding-right: 15px; padding-left: 15px;">
@@ -84,16 +113,6 @@
     </div>
 </body>
 <script>
-
-
-    axios.get('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>')
-        .then(function (response) {
-            console.log(response['data'])
-            document.getElementById('service-name').innerText = response['data']['name']
-        }).catch(function (error) {
-            console.log(error.response.status)
-        })
-
     function start_service() {
         axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/start', {})
             .then(function (response) {
@@ -122,11 +141,6 @@
             .catch(function (error) {
                 console.log(error);
             });
-    }
-
-    function stayDown() {
-        var element = document.getElementById("output")
-        element.scrollTop = element.scrollHeight;
     }
 </script>
 
