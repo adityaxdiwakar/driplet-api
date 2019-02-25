@@ -13,6 +13,7 @@ NOT_FOUND = {"message": "User could not be found", "code": 404}
 AUTH_FAILED = {"message": "Authorization failed", "code": 401}
 UNAME_EXISTS = {"message": "A user with that username already exists", "code": 400}
 EMAIL_EXISTS = {"message": "A user with that email already exists", "code": 400}
+TOKEN_VERIFIED ={"message": "Successfully verified your token", "code": 200}
 
 
 #helper functions
@@ -178,3 +179,11 @@ class login(Resource):
                 else:
                     return AUTH_FAILED, 401
         return NOT_FOUND, 404 
+
+class verify(Resource):
+    def get(self, clientid):
+        request_token = request.headers.get('authorization')
+        auth = accounts.authenticate_user(clientid, request_token)
+        if auth != 200:
+            return auth
+        return TOKEN_VERIFIED

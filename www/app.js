@@ -7,9 +7,25 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-    console.log(req.cookies)
-    res.render("index.ejs")
+app.get('/', async (req, res) => {
+    try{
+        if (req.cookies.token == undefined || req.cookies.userid == undefined) {
+            res.render("index.ejs")
+        }
+        const authorization = await axios.get('http://localhost:3141/endpoints/accounts/' + req.cookies.userid, 
+        {
+            "headers": {
+                authorization: req.cookies.token
+            }
+        })
+        console.log(authorization.status)
+        if(authorization.status == 200) {
+            res.redirect(req.cookies.userid + '/services')
+        }
+    }
+    catch (e) {
+        console.log(e)
+    }
 })
 
 app.get('/login', (req, res) => {
