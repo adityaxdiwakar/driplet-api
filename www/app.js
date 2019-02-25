@@ -32,19 +32,29 @@ app.get('/:clientid/services/:serviceid', async (req, res) => {
     }
     else {
         try {
-            const request = await axios('http://localhost:3141/endpoints/' + clientid + '/services/' + serviceid,
+            const request_promise = axios('http://localhost:3141/endpoints/' + clientid + '/services/' + serviceid,
                 {
                     "headers": {
                         authorization: req.cookies.token
                     }
                 }
             )
+            const all_services_promise = axios('http://localhost:3141/endpoints/' + clientid + '/services',
+                {
+                    "headers": {
+                        authorization: req.cookies.token
+                    }
+                }
+            )
+            const [request, all_services] = await Promise.all([request_promise, all_services_promise]);
+            console.log(all_services.data)
             res.render('service.ejs', {
                 serviceid: serviceid,
                 clientid: clientid,
                 servicename: request.data.name,
                 token: req.cookies.token,
-                logservice: request.data.log_command
+                logservice: request.data.log_command,
+                services: all_services.data
             })
         }
         catch (e) {
