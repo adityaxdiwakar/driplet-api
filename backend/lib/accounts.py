@@ -5,7 +5,7 @@ from passlib.apps import custom_app_context as pwd_context
 import time, json, os, random, shutil, string, jwt
 
 #API dependencies
-from flask import Flask
+from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
 
 #string definitions
@@ -181,9 +181,9 @@ class login(Resource):
         return NOT_FOUND, 404 
 
 class verify(Resource):
-    def get(self, clientid):
+    def get(self, client_id):
         request_token = request.headers.get('authorization')
-        auth = accounts.authenticate_user(clientid, request_token)
+        auth = authenticate_user(client_id, request_token)
         if auth != 200:
             return auth
         return TOKEN_VERIFIED
