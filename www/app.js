@@ -21,6 +21,16 @@ app.get('/:clientid/services', (req, res) => {
 
 })
 
+app.get('/:clientid/services/create', (req, res) => {
+    var clientid = req.params.clientid;
+    if (req.cookies.userid != clientid) {
+        res.render('unavaiable.ejs')
+    }
+    else {
+        res.render('create-service.ejs')
+    }
+})
+
 app.get('/:clientid/services/:serviceid', async (req, res) => {
     var clientid = req.params.clientid;
     var serviceid = req.params.serviceid;
