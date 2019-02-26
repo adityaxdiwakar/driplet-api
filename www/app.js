@@ -2,7 +2,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser');
 const axios = require('axios')
 const app = express()
-const port = 80
+const port = 31415
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(cookieParser());
@@ -12,14 +12,18 @@ app.get('/', async (req, res) => {
         if (req.cookies.token == undefined || req.cookies.userid == undefined) {
             res.render("index.ejs")
         }
-        const authorization = await axios.get('http://localhost:3141/endpoints/accounts/' + req.cookies.userid,
+        const authorization = await axios.get('http://localhost:3141/endpoints/accounts/' + req.cookies.userid + '/verify',
             {
                 "headers": {
                     authorization: req.cookies.token
                 }
             })
+        console.log(authorization.status)
         if (authorization.status == 200) {
             res.redirect(req.cookies.userid + '/services')
+        }
+        else {
+            res.redirect('/')
         }
     }
     catch (e) {
@@ -43,11 +47,13 @@ app.get('/:clientid/services', async (req, res) => {
         const services = await axios.get('http://localhost:3141/endpoints/' + req.cookies.userid + '/services',
             {
                 "headers": {
-                    authorization: req.cookies.token
+                    'authorization': req.cookies.token
                 }
             })
         res.render("services.ejs", {
-            services: services.data
+            services: services.data,
+            clientid: clientid,
+            token: req.cookies.token
         })
     }
     catch (e) {
@@ -92,7 +98,6 @@ app.get('/:clientid/services/:serviceid', async (req, res) => {
                 }
             )
             const [request, all_services] = await Promise.all([request_promise, all_services_promise]);
-            console.log(all_services.data)
             res.render('service.ejs', {
                 serviceid: serviceid,
                 clientid: clientid,

@@ -42,6 +42,7 @@ class manager(Resource):
         user_services = get_services(client_id)
         parser = reqparse.RequestParser()
         parser.add_argument("name")
+        parser.add_argument("description")
         parser.add_argument("start_command")
         parser.add_argument("stop_command")
         parser.add_argument("restart_command")
@@ -51,6 +52,7 @@ class manager(Resource):
         
         service = {
             "name": args['name'],
+            "description": args['description'],
             "id": get_service_id(get_services(client_id)),
             "start_command": args['start_command'],
             "stop_command": args['stop_command'],

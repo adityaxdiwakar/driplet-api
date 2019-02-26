@@ -16,7 +16,7 @@
             height: 35%;
             border-radius: 5px;
             margin-bottom: 7.5px;
-            font-size: 12px;
+            font-size: 16px;
             padding: 8px;
             overflow: scroll;
         }
@@ -27,10 +27,14 @@
         }
 
         .new-service {
-            font-size: 12px;
+            font-size: 16px;
             padding-left: 22px;
             padding-top: 7px;
             padding-bottom: 7px;
+        }
+
+        .service-header {
+            padding:0px;
         }
     </style>
     <script>
@@ -94,7 +98,9 @@
     <div class="container-fluid" id="wrapper">
         <div class="row">
             <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="sidebar-heading">Your Services</div>
+                <a class="list-group-item list-group-item-action bg-light service-header" href="../services">
+                    <div class="sidebar-heading">Your Services</div>
+                </a>
                 <div class="list-group list-group-flush">
                     <% for (var i = 0; i < services.length; i++) { %>
                         <a href=<%=services[i].id%> class="list-group-item list-group-item-action bg-light new-service"><%=services[i].name%></a>
