@@ -7,6 +7,12 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
 app.use(cookieParser());
 
+const logRequestStart = (req, res, next) => {
+    console.info(`${req.method} ${req.originalUrl}`)
+    next()
+}
+app.use(logRequestStart)
+
 app.get('/', async (req, res) => {
     try {
         if (req.cookies.token == undefined || req.cookies.userid == undefined || req.cookies.token == "" || req.cookies.userid == "") {
