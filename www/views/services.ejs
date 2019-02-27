@@ -50,7 +50,7 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item" href="#">My Account</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Log Out</a>
+                    <a class="dropdown-item" onclick="log_out()">Log Out</a>
                 </div>
             </div>
         </div>
@@ -91,6 +91,9 @@
         </div>
     </div>
 </body>
+
+<% include partials/log-out %>
+
 <script>
     function start_creation() {
         document.getElementById('service-creation-box').innerHTML = `<% include partials/services/pick-type %>`

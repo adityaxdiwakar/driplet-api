@@ -9,7 +9,7 @@ app.use(cookieParser());
 
 app.get('/', async (req, res) => {
     try {
-        if (req.cookies.token == undefined || req.cookies.userid == undefined) {
+        if (req.cookies.token == undefined || req.cookies.userid == undefined || req.cookies.token == "" || req.cookies.userid == "") {
             res.render("index.ejs")
         }
         const authorization = await axios.get('http://localhost:3141/endpoints/accounts/' + req.cookies.userid + '/verify',
@@ -18,7 +18,6 @@ app.get('/', async (req, res) => {
                     authorization: req.cookies.token
                 }
             })
-        console.log(authorization.status)
         if (authorization.status == 200) {
             res.redirect(req.cookies.userid + '/services')
         }
@@ -44,7 +43,7 @@ app.get('/:clientid/services', async (req, res) => {
         else if (req.cookies.token == undefined) {
             res.redirect('/login')
         }
-        const services = await axios.get('http://localhost:3141/endpoints/' + req.cookies.userid + '/services',
+        const services = await axios.get('http://localhost:3141/endpoints/' + clientid + '/services',
             {
                 "headers": {
                     'authorization': req.cookies.token
