@@ -120,6 +120,10 @@ class registration(Resource):
 
 class acmang(Resource):
     def get(self, client_id):
+        request_token = request.headers.get('authorization')
+        auth = authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
         user = get_user(client_id)
         if user == None:
             return NOT_FOUND, 404
@@ -127,6 +131,10 @@ class acmang(Resource):
             return public_user(user)
 
     def delete(self, client_id):
+        request_token = request.headers.get('authorization')
+        auth = authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
         users = get_users()
         for user in users:
             if user['id'] == client_id:
@@ -135,6 +143,11 @@ class acmang(Resource):
         return NOT_FOUND, 404
 
     def patch(self, client_id):
+        request_token = request.headers.get('authorization')
+        auth = authenticate_user(client_id, request_token)
+        if auth != 200:
+            return auth
+            
         parser = reqparse.RequestParser()
         parser.add_argument("username")
         parser.add_argument("email")

@@ -113,9 +113,11 @@
             .then((response) => {
                 document.cookie = "userid=" + String(response['data']['id']);
                 document.cookie = "token=" + String(response['data']['token']);
+                window.location.href = "/";
             })
             .catch(function (error) {
                 console.log(error);
+                alert("Somethng went wrong, try again.")
             });
     }
 
@@ -133,12 +135,13 @@
             password: password
         })
             .then(function (response) {
-                document.cookie = "userid=" + String(response['id']);
-                document.cookie = "token=" + String(response['token']);
-                console.log(response);
+                document.cookie = "userid=" + String(response['data']['id']);
+                document.cookie = "token=" + String(response['data']['token']);
+                window.location.href = "/";
             })
             .catch(function (error) {
                 console.log(error);
+                alert("Something went wrong, try again.")
             });
     }
 </script>

@@ -31,9 +31,7 @@ app.get('/', async (req, res) => {
             res.redirect('/')
         }
     }
-    catch (e) {
-        console.log(e)
-    }
+    catch (e) {}
 })
 
 app.get('/login', (req, res) => {
