@@ -48,9 +48,9 @@
                     Account
                 </button>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a class="dropdown-item" href="#">My Account</a>
+                    <button class="dropdown-item" href="#">My Account</button>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" onclick="log_out()">Log Out</a>
+                    <button class="dropdown-item" onclick="log_out()">Log Out</button>
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
             location.reload()
         }
         catch (e) {
-            console.log(e)
+            alert("Something went wrong, please make sure your service name matches (case sensitive) the one in the commands used and that the service IS running.")
         }
                       
         }

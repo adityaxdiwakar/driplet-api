@@ -49,7 +49,13 @@ class manager(Resource):
         parser.add_argument("status_command")
         parser.add_argument("log_command")
         args = parser.parse_args()
-        
+
+        SERVICE_NOT_FOUND = {"message": "The service requested could not be found on the machine", "code": 404}
+        if os.system(f"systemctl is-active {args['name']} --quiet") == 0:
+            pass
+        else:
+            return SERVICE_NOT_FOUND, 404
+
         service = {
             "name": args['name'],
             "description": args['description'],
