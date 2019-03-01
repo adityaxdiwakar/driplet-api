@@ -1,3 +1,4 @@
+ssl/
 backend/bin/
 .env
 *.txt

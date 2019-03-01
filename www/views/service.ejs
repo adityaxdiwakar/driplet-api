@@ -2,8 +2,13 @@
 
 <head>
     <title>Driplet - Service</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+    crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <style>
         <% include partials/sidebar %>
@@ -90,9 +95,17 @@
                     <a class="nav-link" href="../../">Home <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
-            <a href="login.html">
-                <button type="button" class="btn btn-outline-light">Login / Register</button>
-            </a>
+            <div class="btn-group">
+                <button type="button" class="btn btn-light dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
+                    Account
+                </button>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <button class="dropdown-item" href="#">My Account</button>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" onclick="log_out()">Log Out</button>
+                </div>
+            </div>
         </div>
     </nav>
     <div class="container-fluid" id="wrapper">
@@ -128,6 +141,9 @@
 
     </div>
 </body>
+
+<% include partials/log-out %>
+
 <script>
     function start_service() {
         axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/start', {})
