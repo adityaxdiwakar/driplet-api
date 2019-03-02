@@ -1,5 +1,6 @@
 #custom dependencies
-from lib import services, accounts, sockets
+from lib.accounts.endpoints import account, login, verify, registration
+from lib import services, sockets
 
 #flask dependencies
 from flask import Flask, request
@@ -28,10 +29,10 @@ api.add_resource(services.stop, "/endpoints/<string:client_id>/services/<string:
 api.add_resource(services.restart, "/endpoints/<string:client_id>/services/<string:service_id>/restart")
 
 #writing account endpoints
-api.add_resource(accounts.registration, "/endpoints/register")
-api.add_resource(accounts.verify, "/endpoints/accounts/<string:client_id>/verify")
-api.add_resource(accounts.acmang, "/endpoints/accounts/<string:client_id>")
-api.add_resource(accounts.login, "/endpoints/login")
+api.add_resource(registration.register, "/endpoints/register")
+api.add_resource(verify.verify, "/endpoints/accounts/<string:client_id>/verify")
+api.add_resource(account.account, "/endpoints/accounts/<string:client_id>")
+api.add_resource(login.login, "/endpoints/login")
 
 #running and setting host port (local for nginx reverse proxy)
 app.run(host='127.0.0.1', port=3141, debug=True)
