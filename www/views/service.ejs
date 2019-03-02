@@ -76,7 +76,7 @@
             element.scrollTop = element.scrollHeight;
         }
 
-        var wsUri = "ws://localhost:3142/";
+        var wsUri = "ws://adi.wtf:3142/";
         websocket = new WebSocket(wsUri);
         websocket.onopen = function (evt) {
             onOpen(evt)
@@ -172,7 +172,7 @@
 
 <script>
     function start_service() {
-        axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/start', {})
+        axios.post('http://adi.wtf:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/start', {})
             .then(function (response) {
                 console.log(response);
             })
@@ -182,7 +182,7 @@
     }
 
     function stop_service() {
-        axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/stop', {})
+        axios.post('http://adi.wtf:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/stop', {})
             .then(function (response) {
                 console.log(response);
             })
@@ -192,7 +192,7 @@
     }
 
     function restart_service() {
-        axios.post('http://localhost:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/restart', {})
+        axios.post('http://adi.wtf:3141/endpoints/<%= clientid %>/services/<%= serviceid %>/restart', {})
             .then(function (response) {
                 console.log(response);
             })
