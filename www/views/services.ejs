@@ -10,6 +10,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <style>
         .col-sm-6 {
                 margin-top: 30px;
@@ -57,10 +58,14 @@
         <div class="row">
             <% for(i=0; i < services.length; i++) {%>
             <div class="col-sm-6">
-                <div class="card">
+            
+                <div class="card" id=<%=services[i].id%>>
                     <div class="card-body">
                         <h5 class="card-title">
-                            <%=services[i].name%>
+                            <%=services[i].name%> 
+                            <button onclick="delete_service('<%=services[i].id%>')" class="btn" style="float:right;">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
                         </h5>
                         <% if (services[i].description != undefined) {%>
                         <p class="card-text">
@@ -93,6 +98,24 @@
 <% include partials/log-out %>
 
 <script>
+    
+   async function delete_service(id) {
+    try {
+        let service_deleted = await axios.delete('http://localhost:3141/endpoints/<%=clientid%>/services/' + id,
+        {
+                    "headers": {
+                        authorization: "<%=token%>"
+                    }
+        })
+        console.log(service_deleted)
+        location.reload()n
+    }
+    catch(e) {
+        console.log(e)
+    }
+       
+   }
+
     function start_creation() {
         document.getElementById('service-creation-box').innerHTML = `<% include partials/services/pick-type %>`
     }
