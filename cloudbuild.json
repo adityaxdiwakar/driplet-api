@@ -14,8 +14,8 @@
     {
         "name": "ubuntu",
         "args": [
-            "ls",
-            "-l"
+            "bash",
+            "cd.sh"
         ]
     },
     {
