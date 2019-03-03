@@ -6,6 +6,12 @@ install:
   - sudo apt update
   - sudo apt install docker.io -y
   - sudo docker build --rm -f "Dockerfile" -t driplet:latest .
+  - sudo apt install -y build-essential libssl-dev zlib1g-dev libncurses5-dev libncursesw5-dev libreadline-dev libsqlite3-dev libgdbm-dev libdb5.3-dev libbz2-dev libexpat1-dev liblzma-dev tk-dev libffi-dev
+  - wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz
+  - tar xf Python-3.7.0.tar.xz
+  - cd Python-3.7.0
+  - ./configure 
+  - sudo make altinstall
 
 before_script:
   - sudo docker run -d -p 3141:3141 driplet
