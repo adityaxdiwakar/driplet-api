@@ -1,2 +1,4 @@
 mkdir bin
-python 
+python --version
+python3 --version
+python3.7 --version
