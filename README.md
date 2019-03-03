@@ -1,4 +1,4 @@
-# Driplet
+# Driplet [![Build Status](https://travis-ci.com/adityaxdiwakar/driplet.svg?branch=master)](https://travis-ci.com/adityaxdiwakar/driplet)
 Like Droplet, but more... drippy! A panel to view systemctl statuses utilizing logs from journalctl focusing on ease of use.
 
 Hosted and powered by NetVPX, check them out [here](https://netvpx.com) for cheap, reliable, and powerful virtual private servers to deploy your code.
