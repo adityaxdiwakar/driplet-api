@@ -1,0 +1,12 @@
+sudo: required
+dist: trusty
+
+install:
+  - sudo apt install docker.io -y
+  - sudo docker build --rm -f "Dockerfile" -t driplet:latest .
+
+before_script:
+  - sudo docker run -p 3141:3141 driplet
+
+script:
+  - ./test.sh
