@@ -32,13 +32,6 @@
     {
         "name": "ubuntu",
         "args": [
-            "mkdir",
-            "bin"
-        ]
-    },
-    {
-        "name": "ubuntu",
-        "args": [
             "cat",
             "current.txt"
         ]
