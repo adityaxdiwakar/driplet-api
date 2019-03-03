@@ -22,6 +22,31 @@
         "name": "docker.io/library/python:3.7",
         "args": [
             "python3.7",
+            "-m",
+            "pip",
+            "freeze",
+            ">>",
+            "current.txt"
+        ]
+    },
+    {
+        "name": "ubuntu",
+        "args": [
+            "mkdir",
+            "bin"
+        ]
+    },
+    {
+        "name": "ubuntu",
+        "args": [
+            "cat",
+            "current.txt"
+        ]
+    },
+    {
+        "name": "docker.io/library/python:3.7",
+        "args": [
+            "python3.7",
             "backend/app.py"
         ]
     }
