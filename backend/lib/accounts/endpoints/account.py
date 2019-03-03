@@ -2,6 +2,7 @@ from lib.accounts import authentication as auth
 from lib.accounts import utils as account_utils
 
 import utils
+import shutil
 
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse

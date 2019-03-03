@@ -27,6 +27,7 @@ api.add_resource(services.services, "/endpoints/<string:client_id>/services")
 api.add_resource(service.service, "/endpoints/<string:client_id>/services/<string:service_id>")
 api.add_resource(actions.start, "/endpoints/<string:client_id>/services/<string:service_id>/start")
 api.add_resource(actions.stop, "/endpoints/<string:client_id>/services/<string:service_id>/stop")
+api.add_resource(actions.restart, "/endpoints/<string:client_id>/services/<string:service_id>/restart")
 
 #writing account endpoints
 api.add_resource(registration.register, "/endpoints/register")
