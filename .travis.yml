@@ -7,7 +7,7 @@ install:
   - sudo docker build --rm -f "Dockerfile" -t driplet:latest .
 
 before_script:
-  - sudo docker run -p 3141:3141 driplet
+  - sudo docker run -d -p 3141:3141 driplet
 
 script:
   - ./test.sh
