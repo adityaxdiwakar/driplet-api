@@ -1,1 +1,2 @@
-echo "Test"
+mkdir bin
+python 
