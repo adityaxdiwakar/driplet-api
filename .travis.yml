@@ -1,7 +1,8 @@
 sudo: required
-dist: trusty
+dist: bionic
 
 install:
+  - sudo apt update
   - sudo apt install docker.io -y
   - sudo docker build --rm -f "Dockerfile" -t driplet:latest .
 
