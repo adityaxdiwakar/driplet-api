@@ -1,7 +1,6 @@
 ssl/
 backend/bin/
 .env
-*.txt
 *.pyc
 backend/global_bin/
 *.env
