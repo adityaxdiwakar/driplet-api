@@ -14,8 +14,8 @@
     {
         "name": "ubuntu",
         "args": [
-            "cd",
-            "backend"
+            "ls",
+            "-l"
         ]
     },
     {
