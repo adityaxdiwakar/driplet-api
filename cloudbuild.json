@@ -10,6 +10,20 @@
             "-r",
             "requirements.txt"
         ]
+    },
+    {
+        "name": "ubuntu",
+        "args": [
+            "cd",
+            "backend"
+        ]
+    },
+    {
+        "name": "docker.io/library/python:3.7",
+        "args": [
+            "python3.7",
+            "app.py"
+        ]
     }
     ]
 }
