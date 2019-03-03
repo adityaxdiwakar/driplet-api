@@ -1,0 +1,14 @@
+{
+    "steps": [
+    {
+        "name": "docker.io/library/python:3.7",
+        "args": [
+            "-m",
+            "pip", 
+            "install",
+            "-r",
+            "requirements.txt"
+        ]
+    }
+    ]
+}
