@@ -11,7 +11,7 @@ install:
   - pip install requests
 
 before_script:
-  - sudo docker run -p 3141:3141 driplet
+  - sudo docker run -p 3141:3141 driplet &
 
 script:
   - python backend/tests/acc_create.py
