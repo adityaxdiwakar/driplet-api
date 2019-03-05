@@ -12,4 +12,4 @@ before_script:
   - sudo docker run -d -p 3141:3141 driplet
 
 script:
-  - python --version
+  - python backend/tests/acc_create.py
