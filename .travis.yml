@@ -6,7 +6,8 @@ python: 3.7
 install:
   - sudo apt update
   - sudo apt install docker.io -y
-  - sudo docker build --rm -f "Dockerfile" -t driplet:latest .
+  - sudo docker build --rm -f "Dockerfile" -t driplet:latest .]
+  - sudo python -m pip install requests
 
 before_script:
   - sudo docker run -d -p 3141:3141 driplet
