@@ -4,6 +4,9 @@ import utils
 import json
 import time
 
+print("Sleeping for docker container bootup")
+time.sleep(5)
+
 
 start = utils.dialog("Checking account creation...", end=" ")
 #make the original account
