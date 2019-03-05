@@ -7,10 +7,10 @@ install:
   - sudo apt update
   - sudo apt install docker.io -y
   - sudo docker build --rm -f "Dockerfile" -t driplet:latest .
-  - sudo python -m pip install requests
+  - sudo pip install requests
 
 before_script:
   - sudo docker run -d -p 3141:3141 driplet
 
 script:
-  - python backend/tests/acc_create.py
+  - sudo python backend/tests/acc_create.py
