@@ -20,6 +20,7 @@ r = requests.post(
 )
 if r.status_code != 201:
     utils.dialog(f"Received a non-200 status code ({r.status_code})")
+    print(r.text)
     raise Exception("Could not create an account")
 else:
     utils.dialog(f"{round(time.time() - start, 3)}s")

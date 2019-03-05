@@ -11,7 +11,9 @@ from passlib.apps import custom_app_context as pwd_context
 
 class register(Resource):
     def post(self):
+        print("A request was received")
         args = utils.gen_fields(reqparse.RequestParser(), ['username', 'email', 'password'])
+        print(args)
         users = account_utils.get_users()
         for user in users:
             if user['email'] == args['email']:
