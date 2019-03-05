@@ -6,3 +6,4 @@ backend/bin/
 backend/global_bin/
 *.env
 www/node_modules
+backend/tests/test_creds.json
