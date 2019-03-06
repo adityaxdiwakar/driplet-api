@@ -13,7 +13,7 @@ install:
 before_script:
   - sudo docker run -d -p 27017:27017 -v ~/data:/data/db mongo
   - python mongo_init.py
-  - sudo docker run --net="host" -p 3141:3141 driplet &
+  - sudo docker run --net="host" driplet &
 
 script:
   - python backend/tests/acc_create.py
