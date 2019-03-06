@@ -1,11 +1,15 @@
 from passlib.apps import custom_app_context as pwd_context
 from lib.accounts import utils as account_utils
+from bson import json_util
 
 import jwt
 import random
 import string
+import utils
+import json
 import en_us
 import copy
+import pymongo
 
 def make_password(given):
     return pwd_context.hash(given)
@@ -17,18 +21,24 @@ def salt(size=1024, chars=string.ascii_uppercase + string.digits + string.ascii_
     return ''.join(random.choice(chars) for _ in range(size))
 
 def user(user):
-    user.pop('salt')
-    user.pop('password')
+    fields = ['salt', 'password', 'services', '_id']
+    for field in fields:
+        try:
+            user.pop(field)
+        except:
+            pass
     return user
 
 def generate(user, salt):
     mem_user = copy.copy(user)
     mem_user.pop('salt')
-    token = jwt.encode(mem_user, user['salt'], algorithm='HS256')
+    mem_user.pop('_id')
+    mem_user.pop('services')
+    token = jwt.encode(json.loads(json.dumps(mem_user)), user['salt'], algorithm='HS256')
     return token.decode('utf-8')
 
 def verify(client_id, token):
-    user = account_utils.get(client_id)
+    user = utils.col.find({"id": clientid})
     if user == None:
         return en_us.NOT_FOUND
     try:

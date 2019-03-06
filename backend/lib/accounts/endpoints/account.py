@@ -2,6 +2,7 @@ from lib.accounts import authentication as auth
 from lib.accounts import utils as account_utils
 
 import utils
+import pymongo
 import shutil
 
 from flask import Flask, request
@@ -14,7 +15,7 @@ class account(Resource):
         if auth_status != 200:
             return auth_status
 
-        user = account_utils.get(client_id)
+        user = utils.col.find({"id": client_id})
         return auth.user(user)
 
     def delete(self, client_id):
@@ -23,11 +24,7 @@ class account(Resource):
         if auth_status != 200:
             return auth_status
 
-        users = account_utils.get_users()
-        for user in users:
-            if user['id'] == client_id:
-                shutil.rmtree(f"bin/{client_id}")
-                return "", 204
+        utils.col.delete_one({"id": client_id})
         
         return NOT_FOUND
 
@@ -45,7 +42,7 @@ class account(Resource):
             if args[key] != None:
                 updates.update({key: args[key]})
 
-        user.update(updates)
-        account_utils.offload(client_id, 'account', user)
+        utils.col.update({'id': client_id}, {"$set": updates}, upsert=False)
+        user = utils.col.find({"id": client_id})
 
         return auth.user(user), 200

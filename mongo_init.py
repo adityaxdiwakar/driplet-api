@@ -2,7 +2,7 @@ import pymongo
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 
-db = myclient["driplet"]
+db = client["driplet"]
 mycol = db["users"]
 
 
