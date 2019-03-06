@@ -38,7 +38,7 @@ def generate(user, salt):
     return token.decode('utf-8')
 
 def verify(client_id, token):
-    user = utils.col.find({"id": clientid})
+    user = utils.encoder(utils.col.find({"id": client_id}))[0]
     if user == None:
         return en_us.NOT_FOUND
     try:
