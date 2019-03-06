@@ -8,7 +8,7 @@ install:
   - sudo apt install docker.io -y
   - sudo docker build --rm -f "Dockerfile" -t driplet:latest .
   - mkdir ~/data
-  - pip install requests
+  - pip install requests pymongo
 
 before_script:
   - sudo docker run -d -p 27017:27017 -v ~/data:/data/db mongo
