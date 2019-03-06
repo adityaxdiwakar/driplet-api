@@ -39,5 +39,4 @@ class register(Resource):
 
         user.update({"token": auth.generate(user, user['salt'])})
         
-        print(type(auth.user(user)))
         return auth.user(json.loads(json_util.dumps(user))), 201

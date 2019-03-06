@@ -2,16 +2,11 @@ from flask_restful import reqparse
 
 import pymongo
 import json
-from bson import ObjectId
-
-class JSONEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, ObjectId):
-            return str(o)
-        return json.JSONEncoder.default(self, o)
+import copy
+from bson import json_util
 
 def encoder(input):
-    return JSONEncoder().encode(input)
+    return copy.copy(json.loads(json_util.dumps(input)))
 
 client = pymongo.MongoClient("mongodb://localhost:27017/")
 db = client["driplet"]

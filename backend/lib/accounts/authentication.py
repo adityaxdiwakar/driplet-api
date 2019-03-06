@@ -34,7 +34,7 @@ def generate(user, salt):
     mem_user.pop('salt')
     mem_user.pop('_id')
     mem_user.pop('services')
-    token = jwt.encode(json.loads(json.dumps(mem_user)), user['salt'], algorithm='HS256')
+    token = jwt.encode(utils.encoder(mem_user), user['salt'], algorithm='HS256')
     return token.decode('utf-8')
 
 def verify(client_id, token):
