@@ -1,23 +1,7 @@
-env:
-  global:
-    - MONGODB_VERSION=2.6.10
-
-services:
-  - docker
-  - mongodb
-
 sudo: required
 dist: xenial
 language: python
 python: 3.7
-
-before_install:
-  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-$MONGODB_VERSION.tgz
-  - tar xfz mongodb-linux-x86_64-$MONGODB_VERSION.tgz
-  - export PATH=`pwd`/mongodb-linux-x86_64-$MONGODB_VERSION/bin:$PATH
-  - mkdir -p data/db
-  - mongod --dbpath=data/db &
-  - sleep 3
 
 install:
   - sudo apt update
@@ -27,6 +11,7 @@ install:
   - pip install requests pymongo
 
 before_script:
+  - sudo docker run -d -p 27017:27017 -v ~/data:/data/db mongo
   - python mongo_init.py
   - sudo docker run -p 3141:3141 driplet &
 
