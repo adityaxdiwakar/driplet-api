@@ -8,11 +8,7 @@ from bson import json_util
 def encoder(input):
     return copy.copy(json.loads(json_util.dumps(input)))
 
-<<<<<<< HEAD
 client = pymongo.MongoClient("mongodb://127.0.0.1:27017/")
-=======
-client = pymongo.MongoClient("mongodb://0.0.0.0:27017/")
->>>>>>> 36c17188960298c79b13f761ab3da3c5a33a9f33
 db = client["driplet"]
 col = db["users"]
 
