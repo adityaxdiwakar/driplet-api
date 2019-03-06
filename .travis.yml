@@ -6,14 +6,14 @@ python: 3.7
 install:
   - sudo apt update
   - sudo apt install docker.io -y
-  - sudo docker build --rm --net="host" -f "Dockerfile" -t driplet:latest .
+  - sudo docker build --rm -f "Dockerfile" -t driplet:latest .
   - mkdir ~/data
   - pip install requests pymongo
 
 before_script:
   - sudo docker run -d -p 27017:27017 -v ~/data:/data/db mongo
   - python mongo_init.py
-  - sudo docker run -p 3141:3141 driplet &
+  - sudo docker run --net="host" -p 3141:3141 driplet &
 
 script:
   - python backend/tests/acc_create.py
