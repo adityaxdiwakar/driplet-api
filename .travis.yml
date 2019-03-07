@@ -16,4 +16,5 @@ before_script:
   - sudo docker run --network=host driplet &
 
 script:
+  - sleep 5
   - python backend/tests/acc_create.py
