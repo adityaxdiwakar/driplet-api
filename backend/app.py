@@ -1,14 +1,10 @@
 #custom dependencies
 from lib.accounts.endpoints import account, login, verify, registration
 from lib.services.endpoints import services, service, actions
-from lib import sockets
 
 #flask dependencies
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
-
-#runs the sockets, what else? lol
-sockets.run()
 
 #initiializing the flask webapp
 app = Flask(__name__)
