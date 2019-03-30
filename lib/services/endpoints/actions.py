@@ -27,12 +27,12 @@ class start(Resource):
         if service.count() == 0:
             return en_us.NOT_FOUND
 
-        request = {
+        command = {
             "serviceid": service_id,
             "content": utils.encoder(service)[0]['start_command']
         }
-        request = json.dumps(request)
-        pub(request.encode('utf-8'))
+        command = json.dumps(command)
+        pub(command.encode('utf-8'))
         return "", 204
 
 
@@ -47,12 +47,12 @@ class stop(Resource):
         if service.count() == 0:
             return en_us.NOT_FOUND
 
-        request = {
+        command = {
             "serviceid": service_id,
             "content": utils.encoder(service)[0]['stop_command']
         }
-        request = json.dumps(request)
-        pub(request.encode('utf-8'))
+        command = json.dumps(command)
+        pub(command.encode('utf-8'))
         return "", 204
 
 
@@ -67,10 +67,10 @@ class restart(Resource):
         if service.count() == 0:
             return en_us.NOT_FOUND
 
-        request = {
+        command = {
             "serviceid": service_id,
             "content": utils.encoder(service)[0]['restart_command']
         }
-        request = json.dumps(request)
-        pub(request.encode('utf-8'))
+        command = json.dumps(command)
+        pub(command.encode('utf-8'))
         return "", 204
