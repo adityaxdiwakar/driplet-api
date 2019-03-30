@@ -27,10 +27,6 @@ class services(Resource):
         args = utils.gen_fields(reqparse.RequestParser(),
                                 ['name', 'description', 'start_command', 'stop_command',
                                  'restart_command', 'status_command', 'log_command'])
-
-        if os.system(f"systemctl is-active {args['name']} --quiet") != 0:
-            return en_us.SERVICE_NOT_FOUND
-
         service = args
 
         service.update(
