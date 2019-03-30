@@ -8,6 +8,7 @@ import shutil
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
 
+
 class account(Resource):
     def get(self, client_id):
         request_token = request.headers.get('authorization')
@@ -34,7 +35,7 @@ class account(Resource):
             return auth_status
 
         args = utils.gen_fields(reqparse.RequestParser(),
-                    ['username', 'email', 'password'])
+                                ['username', 'email', 'password'])
 
         updates = {}
         for key in args:

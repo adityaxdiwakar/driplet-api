@@ -11,14 +11,18 @@ import en_us
 import copy
 import pymongo
 
+
 def make_password(given):
     return pwd_context.hash(given)
+
 
 def check_password(given, stored):
     return pwd_context.verify(given, stored)
 
+
 def salt(size=1024, chars=string.ascii_uppercase + string.digits + string.ascii_lowercase):
     return ''.join(random.choice(chars) for _ in range(size))
+
 
 def user(user):
     fields = ['salt', 'password', 'services', '_id']
@@ -29,13 +33,15 @@ def user(user):
             pass
     return user
 
+
 def generate(user, salt):
     mem_user = copy.copy(user)
     mem_user.pop('salt')
     mem_user.pop('_id')
-    mem_user.pop('services')
-    token = jwt.encode(utils.encoder(mem_user), user['salt'], algorithm='HS256')
+    token = jwt.encode(utils.encoder(mem_user),
+                       user['salt'], algorithm='HS256')
     return token.decode('utf-8')
+
 
 def verify(client_id, token):
     user = utils.encoder(utils.col.find({"id": client_id}))[0]
@@ -48,4 +54,4 @@ def verify(client_id, token):
     if 'id' in payload:
         if payload['id'] == user['id']:
             return 200
-    return en_us.AUTH_FAILED 
+    return en_us.AUTH_FAILED

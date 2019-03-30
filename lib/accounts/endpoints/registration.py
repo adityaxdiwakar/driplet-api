@@ -12,10 +12,12 @@ from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
 from passlib.apps import custom_app_context as pwd_context
 
+
 class register(Resource):
     def post(self):
-        args = utils.gen_fields(reqparse.RequestParser(), ['username', 'email', 'password'])
-        
+        args = utils.gen_fields(reqparse.RequestParser(), [
+                                'username', 'email', 'password'])
+
         same_email = utils.col.find({"email": args['email']})
         same_username = utils.col.find({"username": args['username']})
         print(json_util.dumps(same_email))
@@ -29,8 +31,7 @@ class register(Resource):
             "email": args['email'],
             "password": auth.make_password(args['password']),
             "id": account_utils.get_user_id(),
-            "time_created": int(time.time()),
-            "services": []
+            "time_created": int(time.time())
         }
 
         user.update({"salt": auth.salt()})
@@ -38,5 +39,5 @@ class register(Resource):
         utils.col.insert(user)
 
         user.update({"token": auth.generate(user, user['salt'])})
-        
+
         return auth.user(json.loads(json_util.dumps(user))), 201

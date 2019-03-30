@@ -5,6 +5,8 @@ from lib.accounts import authentication as auth
 from lib.services import utils as services_util
 
 import en_us
+import utils
+
 
 class service(Resource):
     def get(self, client_id, service_id):
@@ -13,12 +15,11 @@ class service(Resource):
         if auth_status != 200:
             return auth_status
 
-        services = services_util.get(client_id)
-        for service in services:
-            if service['id'] == service_id:
-                return service, 200
+        service = utils.get_service(client_id, service_id)
+        if service.count() == 0:
+            return en_us.SERVICE_NOT_FOUND
 
-        return en_us.SERVICE_NOT_FOUND
+        return utils.encoder(service[0])
 
     def delete(self, client_id, service_id):
         request_token = request.headers.get('authorization')
@@ -26,11 +27,8 @@ class service(Resource):
         if auth_status != 200:
             return auth_status
 
-        services = services_util.get(client_id)
-        for x in range(len(services)):
-            if services[x]['id'] == service_id:
-                preq = services[0:x] + services[x+1:len(services)+1]
-                services_util.push(preq, client_id)
-                return preq, 200
+        utils.services.delete_one(
+            {"associated_to": client_id, "id": service_id}
+        )
 
-        return en_us.SERVICE_NOT_FOUND
+        return "", 204
