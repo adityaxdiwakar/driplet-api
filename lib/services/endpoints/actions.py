@@ -9,6 +9,7 @@ import utils
 
 import os
 
+pub = Server(port=9875).pub()
 
 class start(Resource):
     def post(self, client_id, service_id):
@@ -17,11 +18,16 @@ class start(Resource):
         if auth_status != 200:
             return auth_status
 
-        service = utils.get_service(client_id, service_id)
+        service = utils.get _service(client_id, service_id)
         if service.count() == 0:
             return en_us.NOT_FOUND
 
-        os.system(utils.encoder(service)[0]['start_command'])
+        request = {
+            "serviceid": service_id,
+            "content": utils.encoder(service)[0]['start_command']
+        }
+        request = json.dumps(request)
+        pub(request.encode('utf-8'))
         return "", 204
 
 
@@ -36,7 +42,12 @@ class stop(Resource):
         if service.count() == 0:
             return en_us.NOT_FOUND
 
-        os.system(utils.encoder(service)[0]['stop_command'])
+        request = {
+            "serviceid": service_id,
+            "content": utils.encoder(service)[0]['stop_command']
+        }
+        request = json.dumps(request)
+        pub(request.encode('utf-8'))
         return "", 204
 
 
@@ -51,5 +62,10 @@ class restart(Resource):
         if service.count() == 0:
             return en_us.NOT_FOUND
 
-        os.system(utils.encoder(service)[0]['restart_command'])
+        request = {
+            "serviceid": service_id,
+            "content": utils.encoder(service)[0]['restart_command']
+        }
+        request = json.dumps(request)
+        pub(request.encode('utf-8'))
         return "", 204
