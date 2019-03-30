@@ -9,7 +9,12 @@ import utils
 
 import os
 
-pub = Server(port=9875).pub()
+from zeroless import (Server)
+try:
+    pub = Server(port=35893).pub()
+    print("Booted publisher")
+except:
+    pass
 
 class start(Resource):
     def post(self, client_id, service_id):
@@ -18,7 +23,7 @@ class start(Resource):
         if auth_status != 200:
             return auth_status
 
-        service = utils.get _service(client_id, service_id)
+        service = utils.get_service(client_id, service_id)
         if service.count() == 0:
             return en_us.NOT_FOUND
 

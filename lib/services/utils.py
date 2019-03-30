@@ -2,7 +2,6 @@ import json
 import random
 import utils
 
-
 def adupe(list, value):
     for item in list:
         if item['id'] == value:
