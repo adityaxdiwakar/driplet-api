@@ -10,12 +10,11 @@ import utils
 import json
 import os
 
+import traceback
+
 from zeroless import (Server)
-try:
-    pub = Server(port=35893).pub()
-    print("Booted publisher")
-except:
-    pass
+pub = Server(port=35893).pub()
+
 
 class start(Resource):
     def post(self, client_id, service_id):

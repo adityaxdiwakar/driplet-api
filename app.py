@@ -1,7 +1,3 @@
-#custom dependencies
-from lib.accounts.endpoints import account, login, verify, registration
-from lib.services.endpoints import services, service, actions
-
 #flask dependencies
 from flask import Flask, request
 from flask_restful import Api, Resource, reqparse
@@ -9,6 +5,10 @@ from flask_restful import Api, Resource, reqparse
 #initiializing the flask webapp
 app = Flask(__name__)
 api = Api(app)
+
+#custom dependencies
+from lib.accounts.endpoints import account, login, verify, registration
+from lib.services.endpoints import services, service, actions
 
 #global headers
 @app.after_request
@@ -32,4 +32,5 @@ api.add_resource(account.account, "/endpoints/accounts/<string:client_id>")
 api.add_resource(login.login, "/endpoints/login")
 
 #running and setting host port (local for nginx reverse proxy)
-app.run(host='127.0.0.1', port=3141, debug=True)
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=3141, debug=False)
