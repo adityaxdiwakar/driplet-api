@@ -66,7 +66,7 @@ class restart(Resource):
         service = utils.get_service(client_id, service_id)
         if service.count() == 0:
             return en_us.NOT_FOUND
-
+            
         command = {
             "serviceid": service_id,
             "content": utils.encoder(service)[0]['restart_command']
