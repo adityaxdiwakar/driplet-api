@@ -7,8 +7,12 @@ app = Flask(__name__)
 api = Api(app)
 
 #custom dependencies
-from lib.accounts.endpoints import account, login, verify, registration
+from lib.accounts.endpoints import account, login, verify, registration, reset
 from lib.services.endpoints import services, service, actions
+
+#grab .env file information
+from dotenv import load_dotenv
+load_dotenv()
 
 #global headers
 @app.after_request
@@ -26,6 +30,7 @@ api.add_resource(actions.stop, "/endpoints/<string:client_id>/services/<string:s
 api.add_resource(actions.restart, "/endpoints/<string:client_id>/services/<string:service_id>/restart")
 
 #writing account endpoints
+api.add_resource(reset.reset, "/endpoints/reset/<string:clientid>")
 api.add_resource(registration.register, "/endpoints/register")
 api.add_resource(verify.verify, "/endpoints/accounts/<string:client_id>/verify")
 api.add_resource(account.account, "/endpoints/accounts/<string:client_id>")
