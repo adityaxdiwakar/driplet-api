@@ -33,12 +33,24 @@ import random
 import jwt
 import time
 
-def password_reset(userid):
-    x = utils.col.find({"id": userid})
-    if x.count == 0:
+def password_reset(identification):
+    x = utils.col.find({"username": identification})
+    y = utils.col.find({"email": identification})
+    z = utils.col.find({"id": identification})
+    user = None
+    if x.count() > 0:
+        user = x
+    elif y.count() > 0:
+        user = y
+    elif z.count() > 0:
+        user = z
+    
+    if user == None:
         return 404 #not found
-    user = utils.encoder(x)[0]
+
+    user = utils.encoder(user)[0] #get the single user out of the array it's returned in
     email = user["email"]
+    userid = user["id"]
     encoded_jwt = jwt.encode({'expiration': int(time.time()) + 3600, 'user': userid}, user["salt"], algorithm='HS256')
     encoded_jwt = encoded_jwt.decode('utf-8')
     e_tem = template(email, f"https://driplet.cf/reset?={encoded_jwt}&user={userid}")

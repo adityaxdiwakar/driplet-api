@@ -31,7 +31,7 @@ api.add_resource(actions.restart, "/endpoints/<string:client_id>/services/<strin
 
 #writing account endpoints
 api.add_resource(change.pw, "/endpoints/reset/<string:clientid>/<string:key>")
-api.add_resource(reset.reset, "/endpoints/reset/<string:clientid>")
+api.add_resource(reset.reset, "/endpoints/reset")
 api.add_resource(registration.register, "/endpoints/register")
 api.add_resource(verify.verify, "/endpoints/accounts/<string:client_id>/verify")
 api.add_resource(account.account, "/endpoints/accounts/<string:client_id>")
