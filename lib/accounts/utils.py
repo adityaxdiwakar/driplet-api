@@ -39,9 +39,9 @@ def password_reset(userid):
         return 404 #not found
     user = utils.encoder(x)[0]
     email = user["email"]
-    encoded_jwt = jwt.encode({'expiration': int(time.time()) + 3600}, user["salt"], algorithm='HS256')
+    encoded_jwt = jwt.encode({'expiration': int(time.time()) + 3600, 'user': userid}, user["salt"], algorithm='HS256')
     encoded_jwt = encoded_jwt.decode('utf-8')
-    e_tem = template(email, f"https://driplet.cf/reset?={encoded_jwt}")
+    e_tem = template(email, f"https://driplet.cf/reset?={encoded_jwt}&user={userid}")
     s = r.post(
         "https://api.sendgrid.com/v3/mail/send",
         json = e_tem,
