@@ -34,12 +34,12 @@ def user(user):
     return user
 
 
-def generate(user, salt):
+def generate(user):
     mem_user = copy.copy(user)
     mem_user.pop('salt')
     mem_user.pop('_id')
     token = jwt.encode(utils.encoder(mem_user),
-                       user['salt'], algorithm='HS256')
+                       user['salt'] + user['password'], algorithm='HS256')
     return token.decode('utf-8')
 
 
@@ -48,7 +48,7 @@ def verify(client_id, token):
     if user == None:
         return en_us.NOT_FOUND
     try:
-        payload = jwt.decode(token, user['salt'], algorithms=['HS256'])
+        payload = jwt.decode(token, user['salt'] + user['password'], algorithms=['HS256'])
     except:
         return en_us.AUTH_FAILED
     if 'id' in payload:

@@ -29,7 +29,7 @@ class login(Resource):
         if not auth.check_password(args['password'], user['password']):
             return en_us.AUTH_FAILED
 
-        user.update({"token": auth.generate(user, user['salt'])})
+        user.update({"token": auth.generate(user)})
         return auth.user(user), 200
 
 

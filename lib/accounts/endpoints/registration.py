@@ -38,6 +38,6 @@ class register(Resource):
 
         utils.col.insert(user)
 
-        user.update({"token": auth.generate(user, user['salt'])})
+        user.update({"token": auth.generate(user)})
 
         return auth.user(json.loads(json_util.dumps(user))), 201
