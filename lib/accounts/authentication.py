@@ -1,6 +1,7 @@
 from passlib.apps import custom_app_context as pwd_context
 from lib.accounts import utils as account_utils
 from bson import json_util
+from copy import copy
 
 import jwt
 import random
@@ -8,7 +9,6 @@ import string
 import utils
 import json
 import en_us
-import copy
 import pymongo
 
 
@@ -35,7 +35,7 @@ def user(user):
 
 
 def generate(user):
-    mem_user = copy.copy(user)
+    mem_user = copy(user)
     mem_user.pop('salt')
     mem_user.pop('_id')
     mem_user.pop('password')
