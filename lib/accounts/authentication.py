@@ -38,6 +38,7 @@ def generate(user):
     mem_user = copy.copy(user)
     mem_user.pop('salt')
     mem_user.pop('_id')
+    mem_user.pop('password')
     token = jwt.encode(utils.encoder(mem_user),
                        user['salt'] + user['password'], algorithm='HS256')
     return token.decode('utf-8')
