@@ -1,8 +1,7 @@
 from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api, Resource
 
 from lib.accounts import authentication as auth
-from lib.services import utils as services_util
 
 import en_us
 import utils
@@ -64,7 +63,7 @@ class restart(Resource):
         service = utils.get_service(client_id, service_id)
         if service.count() == 0:
             return en_us.NOT_FOUND
-            
+
         command = {
             "serviceid": service_id,
             "content": utils.encoder(service)[0]['restart_command']

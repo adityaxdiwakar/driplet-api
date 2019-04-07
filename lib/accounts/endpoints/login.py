@@ -1,14 +1,14 @@
-from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask import Flask
+from flask_restful import Resource, reqparse
 
 from lib.accounts import authentication as auth
-from lib.accounts import utils as account_utils
 
 import utils
 import en_us
 import pymongo
 
 class login(Resource):
+    @classmethod
     def post(self):
         args = utils.gen_fields(reqparse.RequestParser(), ['username', 'password'])
         

@@ -1,14 +1,14 @@
-from flask import Flask, request
+from flask import request
 from flask_restful import Api, Resource, reqparse
 
 from lib.accounts import authentication as auth
-from lib.services import utils as services_util
 
 import en_us
 import utils
 
 
 class service(Resource):
+    @classmethod
     def get(self, client_id, service_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)
@@ -21,6 +21,7 @@ class service(Resource):
 
         return utils.encoder(service[0])
 
+    @classmethod
     def delete(self, client_id, service_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)

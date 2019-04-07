@@ -2,7 +2,7 @@ from lib.accounts import authentication as auth
 from lib.accounts import utils as account_utils
 
 from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Resource, reqparse
 
 import en_us
 import time

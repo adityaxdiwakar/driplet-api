@@ -8,6 +8,7 @@ import utils
 
 
 class services(Resource):
+    @classmethod
     def get(self, client_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)
@@ -16,6 +17,7 @@ class services(Resource):
 
         return utils.encoder(utils.get_all_services(client_id))
 
+    @classmethod
     def post(self, client_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)
