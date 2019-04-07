@@ -7,4 +7,4 @@ RUN pip install -r requirements.txt
 EXPOSE 3141
 EXPOSE 27017
 
-CMD [ "python", "backend/app.py" ]
+CMD [ "python", "app.py" ]

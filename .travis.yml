@@ -17,4 +17,4 @@ before_script:
 
 script:
   - sleep 5
-  - python backend/tests/acc_create.py
+  - python tests/acc_create.py
