@@ -1,22 +1,15 @@
-from flask_restful import reqparse
-
 import pymongo
 import json
 import copy
 from bson import json_util
-
-from zeroless import (Server)
-
-
-def encoder(input):
-    return copy.copy(json.loads(json_util.dumps(input)))
-
 
 client = pymongo.MongoClient("mongodb://127.0.0.1:27017/")
 db = client["driplet"]
 col = db["users"]
 services = db["services"]
 
+def encoder(b_input):
+    return copy.copy(json.loads(json_util.dumps(b_input)))
 
 def gen_fields(parser, fields):
     for field in fields:

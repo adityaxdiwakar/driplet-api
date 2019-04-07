@@ -1,7 +1,6 @@
 from lib.accounts import authentication as auth
 
 import utils
-import pymongo
 
 from flask import request
 from flask_restful import Resource, reqparse

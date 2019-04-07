@@ -1,5 +1,5 @@
-from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask import request
+from flask_restful import Resource, reqparse
 
 from lib.accounts import authentication as auth
 from lib.services import utils as services_util

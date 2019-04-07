@@ -2,7 +2,6 @@ import time
 import jwt
 import random
 import os
-import pymongo
 import utils
 import requests as r
 
@@ -25,7 +24,7 @@ def template(email, link):
         "content": [
             {
                 "type": "text/html",
-                "value": 
+                "value":
                 """
                 <head>
                 <title>Driplet Reset</title>

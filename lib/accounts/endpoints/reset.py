@@ -1,6 +1,6 @@
 from lib.accounts import utils as account_utils
 
-from flask import Flask, request
+from flask import Flask
 from flask_restful import Resource, reqparse
 
 import en_us

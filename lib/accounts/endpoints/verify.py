@@ -12,5 +12,4 @@ class verify(Resource):
         auth_status = auth.verify(client_id, request_token)
         if auth_status != 200:
             return auth_status
-            
         return en_us.TOKEN_VERIFIED

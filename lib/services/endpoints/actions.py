@@ -1,5 +1,5 @@
-from flask import Flask, request
-from flask_restful import Api, Resource
+from flask import request
+from flask_restful import Resource
 
 from lib.accounts import authentication as auth
 
@@ -14,6 +14,7 @@ pub = Server(port=35893).pub()
 
 
 class start(Resource):
+    @classmethod
     def post(self, client_id, service_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)
@@ -34,6 +35,7 @@ class start(Resource):
 
 
 class stop(Resource):
+    @classmethod
     def post(self, client_id, service_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)
@@ -54,6 +56,7 @@ class stop(Resource):
 
 
 class restart(Resource):
+    @classmethod
     def post(self, client_id, service_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)

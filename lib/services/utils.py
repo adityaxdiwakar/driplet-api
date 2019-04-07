@@ -1,8 +1,8 @@
 import random
 import utils
 
-def adupe(list, value):
-    for item in list:
+def adupe(t_list, value):
+    for item in t_list:
         if item['id'] == value:
             return True
     return False

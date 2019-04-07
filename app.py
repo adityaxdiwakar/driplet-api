@@ -1,6 +1,6 @@
 #flask dependencies
-from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask import Flask
+from flask_restful import Api, Resource
 
 #initiializing the flask webapp
 app = Flask(__name__)

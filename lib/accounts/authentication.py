@@ -46,7 +46,7 @@ def verify(client_id, token):
         return en_us.NOT_FOUND
     try:
         payload = jwt.decode(token, user['salt'] + user['password'], algorithms=['HS256'])
-    except:
+    except jwt.exceptions.DecodeError:
         return en_us.AUTH_FAILED
     if 'id' in payload:
         if payload['id'] == user['id']:
