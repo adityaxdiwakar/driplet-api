@@ -1,5 +1,5 @@
 from flask import request
-from flask_restful import Api, Resource
+from flask_restful import Resource
 
 from lib.accounts import authentication as auth
 

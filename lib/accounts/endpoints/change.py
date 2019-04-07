@@ -1,6 +1,5 @@
 from lib.accounts import authentication as auth
 
-from flask import Flask
 from flask_restful import Resource, reqparse
 
 import en_us
