@@ -11,6 +11,7 @@ import jwt
 
 
 class pw(Resource):
+    @classmethod
     def post(self, clientid, key):
         cur_time = int(time.time())
         user = utils.col.find({"id": clientid})

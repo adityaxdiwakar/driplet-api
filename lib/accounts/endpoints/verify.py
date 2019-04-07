@@ -1,11 +1,12 @@
-from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask import request
+from flask_restful import Resource, reqparse
 
 from lib.accounts import authentication as auth
 
 import en_us
 
 class verify(Resource):
+    @classmethod
     def get(self, client_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)

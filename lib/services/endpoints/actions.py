@@ -8,9 +8,7 @@ import en_us
 import utils
 
 import json
-import os
 
-import traceback
 
 from zeroless import (Server)
 pub = Server(port=35893).pub()

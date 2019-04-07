@@ -4,8 +4,6 @@ from flask_restful import Api, Resource, reqparse
 from lib.accounts import authentication as auth
 from lib.services import utils as services_util
 
-import os
-import en_us
 import utils
 
 

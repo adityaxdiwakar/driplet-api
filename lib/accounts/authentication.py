@@ -1,15 +1,11 @@
 from passlib.apps import custom_app_context as pwd_context
-from lib.accounts import utils as account_utils
-from bson import json_util
 from copy import copy
 
 import jwt
 import random
 import string
 import utils
-import json
 import en_us
-import pymongo
 
 
 def make_password(given):
@@ -29,7 +25,7 @@ def user(user):
     for field in fields:
         try:
             user.pop(field)
-        except:
+        except KeyError:
             pass
     return user
 

@@ -1,15 +1,14 @@
 from lib.accounts import authentication as auth
-from lib.accounts import utils as account_utils
 
 import utils
 import pymongo
-import shutil
 
-from flask import Flask, request
-from flask_restful import Api, Resource, reqparse
+from flask import request
+from flask_restful import Resource, reqparse
 
 
 class account(Resource):
+    @classmethod
     def get(self, client_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)
@@ -19,6 +18,7 @@ class account(Resource):
         user = utils.encoder(utils.col.find({"id": client_id}))[0]
         return auth.user(utils.encoder(user))
 
+    @classmethod
     def delete(self, client_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)
@@ -28,6 +28,7 @@ class account(Resource):
         utils.col.delete_one({"id": client_id})
         return "", 204
 
+    @classmethod
     def patch(self, client_id):
         request_token = request.headers.get('authorization')
         auth_status = auth.verify(client_id, request_token)
