@@ -14,6 +14,16 @@ before_script:
   - sudo docker run -d -p 27017:27017 -v ~/data:/data/db mongo
   - python mongo_init.py
   - sudo docker run --network=host driplet &
+  - pip install -r tests/requirements.txt
 
 script:
-  - sleep 5 
+  - python tests/create_account/create_account.py
+  - python tests/create_account/create_account_no_email.py
+  - python tests/create_account/create_account_no_pass.py
+  - python tests/create_account/create_account_no_username.py
+  - python tests/create_account/create_account_no_payload.py
+  - python tests/login_account/login_account.py
+  - python tests/login_account/login_account_using_email.py
+  - python tests/login_account/login_account_no_user.py
+  - python tests/login_account/login_account_no_password.py
+  - python tests/login_account/login_account_no_payload.py

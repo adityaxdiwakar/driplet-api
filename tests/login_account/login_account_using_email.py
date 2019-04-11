@@ -17,26 +17,27 @@ if x.status_code != 201:
 user = x.json()
 
 y = a_api.login_account({
-    "username": "test",
+    "username": "test@test.com",
     "password": "testing_password"
 })
 
 if y.status_code != 200:
     raise Exception(
-        f"Login with valid account did return 200 response, instead returned returned {x.status_code}"
+        f"Login using email on valid account did return 200 response, instead returned returned {x.status_code}"
     )
 
 l_user = y.json()
 
 if user["token"] != l_user["token"]:
     raise Exception(
-        f"Registered vs Login user token mismatch"
+        f"Registered vs Login user token mismatch (using email)"
     )
 
 if user["id"] != l_user["id"]:
     raise Exception(
-        f"Registered vs Login user id mismatch"
+        f"Registered vs Login user id mismatch (using email)"
     )
+
 
 #cleaning up the account
 user = x.json()

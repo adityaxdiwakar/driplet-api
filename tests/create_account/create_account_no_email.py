@@ -11,3 +11,4 @@ if x.status_code != 400:
     raise Exception(
         f"Account creation w/ no email did not return 400 response, instead returned {x.status_code}"
     )
+

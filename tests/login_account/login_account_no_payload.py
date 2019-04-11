@@ -16,26 +16,11 @@ if x.status_code != 201:
 #testing login
 user = x.json()
 
-y = a_api.login_account({
-    "username": "test",
-    "password": "testing_password"
-})
+y = a_api.login_account({})
 
-if y.status_code != 200:
+if y.status_code != 400:
     raise Exception(
-        f"Login with valid account did return 200 response, instead returned returned {x.status_code}"
-    )
-
-l_user = y.json()
-
-if user["token"] != l_user["token"]:
-    raise Exception(
-        f"Registered vs Login user token mismatch"
-    )
-
-if user["id"] != l_user["id"]:
-    raise Exception(
-        f"Registered vs Login user id mismatch"
+        f"Login with no payload on valid account did return 400 response, instead returned returned {x.status_code}"
     )
 
 #cleaning up the account

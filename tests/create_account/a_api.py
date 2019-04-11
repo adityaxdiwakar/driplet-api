@@ -2,11 +2,11 @@ import requests
 
 def make_account(payload):
     return requests.post("http://localhost:3141/endpoints/register",
-                      payload=payload)
+                      data=payload)
 
 def login_account(payload):
     return requests.post("http://localhost:3141/endpoints/register",
-                      payload=payload)
+                      data=payload)
 
 def verify_account(user_id, token):
     return requests.get(f"http://localhost:3141/endpoints/accounts/{user_id}/verify",
