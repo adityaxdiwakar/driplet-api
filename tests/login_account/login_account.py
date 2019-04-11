@@ -26,7 +26,7 @@ y = a_api.login_account({
 if y.status_code != 200:
     db.reset()
     raise Exception(
-        f"Login with valid account did return 200 response, instead returned {x.status_code}"
+        f"Login with valid account did return 200 response, instead returned {y.status_code}"
     )
 
 l_user = y.json()

@@ -25,7 +25,7 @@ y = a_api.login_account({
 if y.status_code != 400:
     db.reset()
     raise Exception(
-        f"Login with no password on valid account did return 400 response, instead returned {x.status_code}"
+        f"Login with no password on valid account did return 400 response, instead returned {y.status_code}"
     )
 
 db.reset()

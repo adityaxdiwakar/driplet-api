@@ -6,5 +6,6 @@ users = db["users"]
 services = db["services"]
 
 def reset():
+    print("Resetting...")
     users.delete_many({})
     services.delete_many({})

@@ -23,7 +23,7 @@ y = a_api.login_account({})
 if y.status_code != 400:
     db.reset()
     raise Exception(
-        f"Login with no payload on valid account did return 400 response, instead returned returned {x.status_code}"
+        f"Login with no payload on valid account did return 400 response, instead returned returned {y.status_code}"
     )
 
 db.reset()
