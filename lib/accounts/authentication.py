@@ -41,7 +41,10 @@ def generate(user):
 
 
 def verify(client_id, token):
-    user = utils.encoder(utils.col.find({"id": client_id}))[0]
+    user = utils.encoder(utils.col.find({"id": client_id}))
+    if len(user) == 0:
+        return en_us.NOT_FOUND
+    user = user[0]
     if user == None:
         return en_us.NOT_FOUND
     try:
