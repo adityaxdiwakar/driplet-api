@@ -5,7 +5,7 @@ def make_account(payload):
                       data=payload)
 
 def login_account(payload):
-    return requests.post("http://localhost:3141/endpoints/register",
+    return requests.post("http://localhost:3141/endpoints/login",
                       data=payload)
 
 def verify_account(user_id, token):
