@@ -16,7 +16,6 @@ class register(Resource):
 
         same_email = utils.col.find({"email": args['email']})
         same_username = utils.col.find({"username": args['username']})
-        print(json_util.dumps(same_email))
         if same_email.count() > 0:
             return en_us.EMAIL_EXISTS
         if same_username.count() > 0:
