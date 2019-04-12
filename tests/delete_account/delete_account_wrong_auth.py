@@ -21,10 +21,10 @@ token = user["token"]
 
 y = a_api.delete_account(user_id, "Definitely not the token")
 
-if y.status_code != 204:
+if y.status_code != 401:
     db.reset()
     raise Exception(
-        f"Account deletion did not reutn 401 response, instead returned {y.status_code}"
+        f"Account deletion did not return 401 response, instead returned {y.status_code}"
     )
 
 db.reset()
