@@ -1,88 +1,66 @@
---- 
-jobs: 
-  - 
-    job: API_Testing
-    pool: 
-      vmImage: ubuntu-16.04
-    steps: 
-      - 
-        bash: |
+jobs:
+  - job: API_Testing
+    pool:
+        vmImage: 'ubuntu-16.04'
+    steps:
+        - bash: |
             sudo apt update -y
             sudo apt install docker.io -y
             displayName: Install Docker.io
-      - 
-        inputs: 
-          architecture: x64
-          versionSpec: "3.6"
-        task: UsePythonVersion@0
-      - 
-        bash: |
+        - task: UsePythonVersion@0
+          inputs:
+               versionSpec: '3.6'
+               architecture: 'x64'
+        - bash: |
             sudo docker build --rm f "Dockerfile" -t driplet:latest .
             displayName: Build Backend Container
-      - 
-        bash: |
+        - bash: |
             mkdir ~/data
             sudo docker run -d -p 27017:27017 -v ~/data:/data/db mongo
             displayName: Initialize MongoDB server
-      - 
-        bash: |
+        - bash: |
             python -m pip install -r tests/requirements.txt
             displayName: Install testing requirements
-      - 
-        bash: |
+        - bash: |
             sudo docker run --network=host driplet &
             displayName: Start Driplet backend
-      - 
-        checkout: self
-      - 
-        bash: |
+        - checkout: self
+        - bash: |
             python tests/accounts/create_account/create_account.py
             displayName: Simple account creation test
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/create_account/create_account_no_email.py
             displayName: Account creation w/o email
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/create_account/create_account_no_pass.py
             displayName: Account creation w/o password
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/create_account/create_account_no_username.py
             displayName: Account creation w/o username
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/create_account/create_account_no_payload.py
             displayName: Account creation w/o payload
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/login_account/login_account.py
             displayName: Simple account login
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/login_account/login_account_using_email.py
             displayName: Account login using email
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/login_account/login_account_no_user.py
             displayName: Account login w/o username
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/login_account/login_account_no_password.py
             displayName: Account login w/o password
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/login_account/login_account_no_payload.py
             displayName: Account login w/o payload
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/delete_account/delete_account.py
             displayName: Simple account deletion
-      - 
-        bash: |
+        - bash: |
             python tests/accounts/delete_account/delete_account_nonexistent.py
             displayName: Account deletion on a nonexistent account
-      - 
-        bash: |-
+        - bash: |
             python tests/accounts/delete_account/delete_account_wrong_auth.py
             displayName: Account deletion without permission
