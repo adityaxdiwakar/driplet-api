@@ -9,8 +9,10 @@ class login(Resource):
     @classmethod
     def post(self):
         fields = ["username", "email"]
-        args = utils.gen_fields(reqparse.RequestParser(), fields)
-        for arg in fields:
+        q_args = ["username", "password"]
+        args = utils.gen_fields(reqparse.RequestParser(), q_args)
+        
+        for arg in q_args:
             if arg not in args:
                 return en_us.BAD_REQUEST
             if args[arg] == None or args[arg] == "":
