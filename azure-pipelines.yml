@@ -8,7 +8,11 @@ jobs:
                versionSpec: '3.6'
                architecture: 'x64'
         - script: git clone https://github.com/driplet/backend
-        - script: ls --recursive
+          displayName: Cloning repository
+        - script: mv backend/* .
+          displayName: Moving source files
+        - script: rm -rf backend
+          displayName: Deleting empty folder
         - script: docker build -t driplet:latest .
           displayName: Build Backend Container
         - bash: |
