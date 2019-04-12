@@ -8,8 +8,11 @@ import en_us
 class login(Resource):
     @classmethod
     def post(self):
-        args = utils.gen_fields(reqparse.RequestParser(), ['username', 'password'])
         fields = ["username", "email"]
+        args = utils.gen_fields(reqparse.RequestParser(), fields)
+        for arg in fields:
+            if arg not in args:
+                return en_us.BAD_REQUEST
         m_length = 0
         users = None
         for field in fields:

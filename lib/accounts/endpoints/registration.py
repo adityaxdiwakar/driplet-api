@@ -11,11 +11,16 @@ from flask_restful import Resource, reqparse
 class register(Resource):
     @classmethod
     def post(self):
-        args = utils.gen_fields(reqparse.RequestParser(), [
-                                'username', 'email', 'password'])
+        q_args = ["username", "email","password"]
+        args = utils.gen_fields(reqparse.RequestParser(), q_args)
 
         same_email = utils.col.find({"email": args['email']})
         same_username = utils.col.find({"username": args['username']})
+
+        for arg in q_args:
+            if arg not in args:
+                return en_us.BAD_REQUEST
+
         if same_email.count() > 0:
             return en_us.EMAIL_EXISTS
         if same_username.count() > 0:
