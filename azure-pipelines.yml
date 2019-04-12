@@ -7,7 +7,7 @@ jobs:
           inputs:
                versionSpec: '3.6'
                architecture: 'x64'
-        -script: ls --recursive
+        - script: ls --recursive
         - script: docker build -t driplet:latest .
           displayName: Build Backend Container
         - bash: |
