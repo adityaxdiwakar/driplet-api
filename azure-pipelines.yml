@@ -1,5 +1,5 @@
 jobs:
-    - job: API Testing
+  - job: API Testing
     pool:
         vmImage: 'ubuntu-16.04'
     steps:
@@ -8,10 +8,10 @@ jobs:
             sudo apt install docker.io -y
             displayName: Install Docker.io
             steps:
-        - task: UsePythonVersion@0
-            inputs:
-                versionSpec: '3.6'
-                architecture: 'x64'
+              - task: UsePythonVersion@0
+                inputs:
+                  versionSpec: '3.6'
+                  architecture: 'x64'
         - bash: |
             sudo docker build --rm f "Dockerfile" -t driplet:latest .
             displayName: Build Backend Container
@@ -65,4 +65,3 @@ jobs:
         - bash: |
             python tests/accounts/delete_account/delete_account_wrong_auth.py
             displayName: Account deletion without permission
-                    
