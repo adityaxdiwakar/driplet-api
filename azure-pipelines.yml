@@ -7,8 +7,7 @@ jobs:
           inputs:
                versionSpec: '3.6'
                architecture: 'x64'
-        - bash: |
-            docker build -t driplet:latest .
+        - script: docker build -t driplet:latest .
           displayName: Build Backend Container
         - bash: |
             mkdir ~/data
