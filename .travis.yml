@@ -27,3 +27,6 @@ script:
   - python tests/login_account/login_account_no_user.py
   - python tests/login_account/login_account_no_password.py
   - python tests/login_account/login_account_no_payload.py
+  - python tests/delete_account/delete_account.py
+  - python tests/delete_account/delete_account_nonexistent.py
+  - python tests/delete_account/delete_account_wrong_auth.py
