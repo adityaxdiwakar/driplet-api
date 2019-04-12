@@ -20,6 +20,8 @@ class register(Resource):
         for arg in q_args:
             if arg not in args:
                 return en_us.BAD_REQUEST
+            if args[arg] == None or args[arg] == "":
+                return en_us.BAD_REQUEST
 
         if same_email.count() > 0:
             return en_us.EMAIL_EXISTS

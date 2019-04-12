@@ -13,6 +13,9 @@ class login(Resource):
         for arg in fields:
             if arg not in args:
                 return en_us.BAD_REQUEST
+            if args[arg] == None or args[arg] == "":
+                return en_us.BAD_REQUEST
+
         m_length = 0
         users = None
         for field in fields:
