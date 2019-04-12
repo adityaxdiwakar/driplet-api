@@ -8,6 +8,7 @@ jobs:
                versionSpec: '3.6'
                architecture: 'x64'
         - script: git clone https://github.com/driplet/backend
+        - script: ls --recursive
         - script: docker build -t driplet:latest .
           displayName: Build Backend Container
         - bash: |
