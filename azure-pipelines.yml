@@ -1,5 +1,5 @@
 jobs:
-  - job: API_Testing
+  - job: API_Start
     pool:
         vmImage: 'ubuntu-16.04'
     steps:
@@ -28,7 +28,7 @@ jobs:
         - checkout: self
         - bash: |
             python tests/accounts/create_account/create_account.py
-          displayName: Simple account creation test
+          displayName: Simple account creation
         - bash: |
             python tests/accounts/create_account/create_account_no_email.py
           displayName: Account creation w/o email
