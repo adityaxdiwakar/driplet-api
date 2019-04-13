@@ -7,12 +7,7 @@ jobs:
           inputs:
                versionSpec: '3.6'
                architecture: 'x64'
-        - script: git clone https://github.com/driplet/backend
-          displayName: Cloning repository
-        - script: mv backend/* .
-          displayName: Moving source files
-        - script: rm -rf backend
-          displayName: Deleting empty folder
+        - checkout: self
         - script: docker build -t driplet:latest .
           displayName: Build Backend Container
         - bash: |
@@ -25,7 +20,6 @@ jobs:
         - bash: |
             sudo docker run --network=host driplet &
           displayName: Start Driplet backend
-        - checkout: self
         - bash: |
             python tests/accounts/create_account/create_account.py
           displayName: Simple account creation
